@@ -6,27 +6,27 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/26 16:50:24 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:19:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONTACT_HPP
  #define CONTACT_HPP
 
+
 #include <string>
 
-class ClassName {
-   public:
-    std::string firstName;
-    std::string lastName;
-    std::string nickname;
-    std::string phoneNumber;
-    std::string darkestSecret;
+class Contact {
+private:
+    std::string firstName_;
+    std::string lastName_;
+    std::string nickname_;
+    std::string phoneNumber_;
+    std::string darkestSecret_;
 
-    
-
-   private:
-       // Add member variables here
+public:
+    Contact() {};
+    ~Contact() {};
 };
 
 #endif  // CONTACT_HPP
