@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:22 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/28 14:58:55 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:21:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int main(int argc, char **argv)
     
     (void)argv;
     if(argc != 1)
+    {
         std::cout << "Usage: ./awesome_phonebook" << std::endl;
+        exit(1);
+    }
     
     phonebook.displayMenu();
     

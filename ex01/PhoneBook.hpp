@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/28 14:57:25 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:09:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 
 class Phonebook {
 
+private:
+        Contact contacts[8];
+        void addContact();
+        void searchContact();
+
 public:
-    void displayMenu() const;
+    void displayMenu();
 };
 
 #endif
