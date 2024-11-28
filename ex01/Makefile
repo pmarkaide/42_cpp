@@ -1,7 +1,11 @@
-NAME = megaphone
+NAME = awesome_phonebook
 
-SRCS = phonebook.cpp
-LIB = phonebook.hpp
+SRCS = 					\
+		main.cpp 		\
+		PhoneBook.cpp	\
+		Contact.cpp		\
+
+
 OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
@@ -14,7 +18,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) ${LIB} -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	
 clean:
 	$(RM) $(OBJS)
