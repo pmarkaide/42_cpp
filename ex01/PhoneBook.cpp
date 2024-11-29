@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 11:33:53 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:58:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ void PhoneBook::displayMenu() {
         }
         else if (choice == "ADD") {
             addContact();
-            break;
         }
         else if (choice == "SEARCH") {
             searchContact();
-            break;
         }
         else {
             std::cout << "Incorrect choice. Please try again\n" << std::endl;
@@ -65,15 +63,24 @@ void  PhoneBook::addContact(){
     std::cout << "Please fill the information:\n" << std::endl;
 
     newContact.setFirstName(evaluate_input("First name: "));
-    newContact.setFirstName(evaluate_input("Last name: "));
-    newContact.setFirstName(evaluate_input("Nick name: "));
-    newContact.setFirstName(evaluate_input("Phone number: "));
-    newContact.setFirstName(evaluate_input("Darkest Secret: "));
+    newContact.setLastName(evaluate_input("Last name: "));
+    newContact.setNickName(evaluate_input("Nick name: "));
+    newContact.setPhoneNumber(evaluate_input("Phone number: "));
+    newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
+    std::cout << "\nMember " << newContact.getNickname() << " succesfully added" << std::endl;
+    displayContact(newContact);
     contacts[n_contact] = newContact;
     n_contact++;
-    std::cout << "\nMember succesfully added" << std::endl;
+}
+
+void  PhoneBook::displayContact(Contact contact){
+    std::cout << "First name: " <<  contact.getFirstName() << std::endl;
+    std::cout << "Last name: " <<  contact.getLastName() << std::endl;
+    std::cout << "Nick name: " <<  contact.getNickname() << std::endl;
+    std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;    
 }
 
 void  PhoneBook::searchContact(){
-    std::cout << "Searching contacts..." << std::endl;
+    std::cout << "Searching contact" << std::endl;
+    
 }
