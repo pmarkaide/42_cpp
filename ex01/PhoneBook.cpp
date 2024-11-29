@@ -6,11 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 11:58:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:09:40 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
+# include <iomanip>         // std::setw
 
 void PhoneBook::displayMenu() {
     std::string choice;
@@ -80,7 +81,33 @@ void  PhoneBook::displayContact(Contact contact){
     std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;    
 }
 
+std::string truncateString(const std::string& str) {
+    if (str.length() > 10) {
+        return str.substr(0, 9) + ".";
+    }
+    return str;
+}
+
 void  PhoneBook::searchContact(){
-    std::cout << "Searching contact" << std::endl;
-    
+   std::cout << "|"
+              << std::setw(10) << "First name"
+              << "|"
+              << std::setw(10) << "Last name"
+              << "|"
+              << std::setw(10) << "Nick name"
+              << "|"
+              << std::setw(10) << "Phone nb"
+              << "|" << std::endl;
+    std::cout << "|-------------------------------------------|" << std::endl;
+    for (int i = 0; i < n_contact; i++) {
+        std::cout << "|"
+                  << std::setw(10) << truncateString(contacts[i].getFirstName())
+                  << "|"
+                  << std::setw(10) << truncateString(contacts[i].getLastName())
+                  << "|"
+                  << std::setw(10) << truncateString(contacts[i].getNickname())
+                  << "|"
+                  << std::setw(10) << truncateString(contacts[i].getPhoneNumber())
+                  << "|" << std::endl;
+    }
 }
