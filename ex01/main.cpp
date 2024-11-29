@@ -6,11 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:22 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 09:42:31 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:38:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <csignal>
 #include "PhoneBook.hpp"
 
 int main(int argc, char **argv)
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
         exit(1);
     }
     
-    phonebook.displayMenu();
+    phonebook.choiceAction();
     
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 11:51:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:16:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ private:
 public:
     PhoneBook() : n_contact(0) {};
     void displayMenu();
+    void choiceAction();
     void displayContact(Contact);
 };
 

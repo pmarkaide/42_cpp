@@ -6,34 +6,47 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 13:09:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 14:04:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
 # include <iomanip>         // std::setw
+# include <limits>          //
 
 void PhoneBook::displayMenu() {
     std::string choice;
 
-    std::cout << "Welcome to the Awesome PhoneBook!" << std::endl;
     std::cout << "Please choose among the options:" << std::endl;
     std::cout << "ADD: Add a Contact" << std::endl;
     std::cout << "SEARCH: Get details of a Contact" << std::endl;
     std::cout << "EXIT: Exit the program" << std::endl;
+}
 
+void PhoneBook::choiceAction() {
+    std::string action;
 
+    std::cout << "Welcome to the Awesome PhoneBook!\n" << std::endl;
+    displayMenu();
     while (true) {
-        std::getline(std::cin, choice);
-        if (choice == "EXIT") {
+        
+        std::getline(std::cin, action);
+        if (std::cin.eof()) {
+            std::cin.clear();
+            std::cin.ignore();
+            continue;
+        }
+        if (action == "EXIT") {
             std::cout << "Exiting program..." << std::endl;
             break;
         }
-        else if (choice == "ADD") {
+        else if (action == "ADD") {
             addContact();
+            displayMenu();
         }
-        else if (choice == "SEARCH") {
+        else if (action == "SEARCH") {
             searchContact();
+            displayMenu();
         }
         else {
             std::cout << "Incorrect choice. Please try again\n" << std::endl;
@@ -43,14 +56,27 @@ void PhoneBook::displayMenu() {
 
 std::string evaluate_input(const std::string& prompt) {
     std::string input;
-
     while (true) {
         std::cout << prompt;
-        std::getline(std::cin, input);
-        if (input.empty()) {
+        std::cin.clear(); // Clear any error flags
+
+        // Attempt to read input
+        if (std::getline(std::cin, input)) {
+            // Successful read
+            if (!input.empty()) {
+                return input;
+            }
             std::cout << "Input cannot be empty. Please try again.\n";
         } else {
-            return input;
+            // Handle EOF
+            if (std::cin.eof()) {
+                // Simply clear the EOF flag and continue
+                std::cin.clear();
+                continue;
+            }
+            
+            // Other input errors
+            std::cout << "Input error occurred. Please try again.\n";
         }
     }
 }
@@ -69,7 +95,7 @@ void  PhoneBook::addContact(){
     newContact.setPhoneNumber(evaluate_input("Phone number: "));
     newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
     std::cout << "\nMember " << newContact.getNickname() << " succesfully added" << std::endl;
-    displayContact(newContact);
+    //displayContact(newContact);
     contacts[n_contact] = newContact;
     n_contact++;
 }
