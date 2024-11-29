@@ -6,30 +6,48 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 14:04:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:24:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
 # include <iomanip>         // std::setw
 # include <limits>          //
+# include <stdlib.h>        //cls
 
 void PhoneBook::displayMenu() {
-    std::string choice;
-
     std::cout << "Please choose among the options:" << std::endl;
     std::cout << "ADD: Add a Contact" << std::endl;
     std::cout << "SEARCH: Get details of a Contact" << std::endl;
     std::cout << "EXIT: Exit the program" << std::endl;
 }
 
+void PhoneBook::displayBanner(){
+    //system("clear");
+    std::cout << R"(
+
+           █████╗ ██╗    ██╗███████╗███████╗ ██████╗ ███╗   ███╗███████╗          
+          ██╔══██╗██║    ██║██╔════╝██╔════╝██╔═══██╗████╗ ████║██╔════╝          
+█████╗    ███████║██║ █╗ ██║█████╗  ███████╗██║   ██║██╔████╔██║█████╗      █████╗
+╚════╝    ██╔══██║██║███╗██║██╔══╝  ╚════██║██║   ██║██║╚██╔╝██║██╔══╝      ╚════╝
+          ██║  ██║╚███╔███╔╝███████╗███████║╚██████╔╝██║ ╚═╝ ██║███████╗          
+          ╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝          
+                                                                                  
+    ██████╗ ██╗  ██╗ ██████╗ ███╗   ██╗███████╗██████╗  ██████╗  ██████╗ ██╗  ██╗ 
+    ██╔══██╗██║  ██║██╔═══██╗████╗  ██║██╔════╝██╔══██╗██╔═══██╗██╔═══██╗██║ ██╔╝ 
+    ██████╔╝███████║██║   ██║██╔██╗ ██║█████╗  ██████╔╝██║   ██║██║   ██║█████╔╝  
+    ██╔═══╝ ██╔══██║██║   ██║██║╚██╗██║██╔══╝  ██╔══██╗██║   ██║██║   ██║██╔═██╗  
+    ██║     ██║  ██║╚██████╔╝██║ ╚████║███████╗██████╔╝╚██████╔╝╚██████╔╝██║  ██╗ 
+    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ 
+                                                                                  
+    )" << std::endl;
+}
+
 void PhoneBook::choiceAction() {
     std::string action;
-
-    std::cout << "Welcome to the Awesome PhoneBook!\n" << std::endl;
-    displayMenu();
+    system("clear");
+    displayBanner();
     while (true) {
-        
         std::getline(std::cin, action);
         if (std::cin.eof()) {
             std::cin.clear();
@@ -43,6 +61,7 @@ void PhoneBook::choiceAction() {
         else if (action == "ADD") {
             addContact();
             displayMenu();
+
         }
         else if (action == "SEARCH") {
             searchContact();
