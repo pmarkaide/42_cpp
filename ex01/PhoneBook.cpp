@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 19:16:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:06:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void PhoneBook::choiceAction() {
         std::getline(std::cin, action);
         if (std::cin.eof()) {
             std::cin.clear();
-            std::cin.ignore();
-            continue;
+            std::cout << "\n\nEOF found! Exiting program" << std::endl;
+            exit(0);
         }
         if (action == "EXIT") {
             std::cout << "Exiting program..." << std::endl;
@@ -95,17 +95,9 @@ std::string evaluate_input(const std::string& prompt) {
     }
 }
 
-int setIndex(int n_contacts) {
-    if (n_contacts >= MAX_CONTACTS) {
-        return (n_contacts % MAX_CONTACTS);
-    }
-    return n_contacts;
-}
-
 void  PhoneBook::addContact(){
 
     Contact newContact;
-    int index;
 
     std::cout << "\nAdding a member..." << std::endl;
     std::cout << "Please fill the information:\n" << std::endl;
@@ -115,9 +107,8 @@ void  PhoneBook::addContact(){
     newContact.setNickName(evaluate_input("Nick name: "));
     newContact.setPhoneNumber(evaluate_input("Phone number: "));
     newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
-    std::cout << "\nMember " << newContact.getNickname() << " succesfully added" << std::endl;
-    index = setIndex(next_index);
-    contacts[index] = newContact;
+    contacts[nb_contacts % MAX_CONTACTS] = newContact;
+    nb_contacts++;
 }
 
 void  PhoneBook::displayContact(Contact contact){
@@ -145,7 +136,8 @@ void  PhoneBook::searchContact(){
               << std::setw(10) << "Phone nb"
               << "|" << std::endl;
     std::cout << "|-------------------------------------------|" << std::endl;
-    for (int i = 0; i < next_index; i++) {
+    int display = std::min(nb_contacts, MAX_CONTACTS);
+    for (int i = 0; i < display; i++) {
         std::cout << "|"
                   << std::setw(10) << truncateString(contacts[i].getFirstName())
                   << "|"
