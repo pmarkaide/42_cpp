@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/11/29 13:22:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:47:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,21 @@ class Contact {
     std::string darkestSecret_;
 
 public:
-    Contact() {};
-    ~Contact() {};
+    Contact();
+    ~Contact();
 
-    void setFirstName(const std::string& firstName) { firstName_ = firstName; }
-    void setLastName(const std::string& lastName) { lastName_ = lastName; }
-    void setNickName(const std::string& nickname) { nickName_ = nickname; }
-    void setPhoneNumber(const std::string& phoneNumber) { phoneNumber_ = phoneNumber; }
-    void setDarkestSecret(const std::string& secret) { darkestSecret_ = secret; }
+    void setFirstName(const std::string& firstName);
+    void setLastName(const std::string& lastName);
+    void setNickName(const std::string& nickname);
+    void setPhoneNumber(const std::string& phoneNumber);
+    void setDarkestSecret(const std::string& secret);
 
-    std::string getFirstName() { return firstName_; }
-    std::string getLastName() { return lastName_; }
-    std::string getNickname() { return nickName_; }
-    std::string getPhoneNumber() { return  phoneNumber_; }
-    std::string getDarkestSecret() { return  darkestSecret_; }
+    std::string getFirstName();
+    std::string getLastName();
+    std::string getNickname();
+    std::string getPhoneNumber();
+    std::string getDarkestSecret();
 };
+
 
 #endif  // CONTACT_HPP

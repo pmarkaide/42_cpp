@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 15:45:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:48:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void PhoneBook::choiceAction() {
             searchContact();
         else {
             std::cout << "Incorrect choice. Please try again\n" << std::endl;
+            std::cout << "Option: ";
         }
     }
 }
