@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 12:06:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:29:39 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void  PhoneBook::displayContact(Contact contact){
     std::cout << "First name: " <<  contact.getFirstName() << std::endl;
     std::cout << "Last name: " <<  contact.getLastName() << std::endl;
     std::cout << "Nick name: " <<  contact.getNickname() << std::endl;
-    std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;    
+    std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;
+    std::cout << "Darkest secret: " <<  contact.getDarkestSecret() << std::endl;
 }
 
 std::string truncateString(const std::string& str) {
@@ -125,8 +126,25 @@ std::string truncateString(const std::string& str) {
     return str;
 }
 
+int getValidNumber() {
+    std::string input;
+
+    while (true) {
+        std::cout << "Select the contact Index to display: ";
+        std::cin >> input;
+        if (input.length() == 1 && input[0] >= '0' && input[0] <= '9') {
+            return input[0] - '0';
+        } else {
+            std::cout << "Invalid input. Please enter a single digit between 0 and 9." << std::endl;
+        }
+    }
+}
+
 void  PhoneBook::searchContact(){
-   std::cout << "|"
+    int contact;
+    std::cout << "|"
+              << std::setw(10) << "Index"
+              << "|"
               << std::setw(10) << "First name"
               << "|"
               << std::setw(10) << "Last name"
@@ -135,10 +153,12 @@ void  PhoneBook::searchContact(){
               << "|"
               << std::setw(10) << "Phone nb"
               << "|" << std::endl;
-    std::cout << "|-------------------------------------------|" << std::endl;
+    std::cout << "|------------------------------------------------------|" << std::endl;
     int display = std::min(nb_contacts, MAX_CONTACTS);
     for (int i = 0; i < display; i++) {
         std::cout << "|"
+                  << std::setw(10) << i + 1
+                  << "|"
                   << std::setw(10) << truncateString(contacts[i].getFirstName())
                   << "|"
                   << std::setw(10) << truncateString(contacts[i].getLastName())
@@ -148,5 +168,7 @@ void  PhoneBook::searchContact(){
                   << std::setw(10) << truncateString(contacts[i].getPhoneNumber())
                   << "|" << std::endl;
     }
-    std::cout << "|-------------------------------------------|" << std::endl;
+    std::cout << "|------------------------------------------------------|" << std::endl;
+    contact = getValidNumber();
+    displayContact(contacts[contact]);
 }
