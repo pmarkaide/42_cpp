@@ -6,13 +6,15 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 17:00:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:09:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
-# include <iomanip>         // std::setw
+# include <iomanip>         // setw
 # include <stdlib.h>        // clear
+#include <thread>           // sleep_for
+#include <chrono>           // duration
 
 // STATIC FUNCTIONS
 
@@ -111,7 +113,8 @@ static void displayContact(Contact contact){
 
 // NON STATIC FUNCTIONS
 
-PhoneBook::PhoneBook() : nbContacts_(0) {}
+PhoneBook::PhoneBook() {}
+PhoneBook::~PhoneBook() {}
 
 void PhoneBook::choiceAction() {
     std::string action;

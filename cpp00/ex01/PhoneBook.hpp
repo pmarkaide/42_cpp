@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 16:34:15 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:08:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 #define PHONEBOOK_HPP
 
 #include "Contact.hpp"
-#include <iostream>
-#include <thread>  // For sleep_for
-#include <chrono>  // For duration
+#include <iostream>         // cout
+
 #define MAX_CONTACTS 8
 class PhoneBook {
 
@@ -29,6 +28,7 @@ private:
 
 public:
     PhoneBook();
+    ~PhoneBook();
     void choiceAction();
 };
 
