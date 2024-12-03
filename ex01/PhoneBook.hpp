@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 12:29:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:34:24 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #include "Contact.hpp"
 #include <iostream>
+#include <thread>  // For sleep_for
+#include <chrono>  // For duration
 #define MAX_CONTACTS 8
 class PhoneBook {
 
@@ -23,9 +25,10 @@ private:
     int nb_contacts;
     void addContact();
     void searchContact();
-    void displayBanner();
+    void displayBanner(bool menu);
     void displayMenu();
     void displayContact(Contact);
+    void exitProgram();
 
 public:
     PhoneBook() : nb_contacts(0) {};

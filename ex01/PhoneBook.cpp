@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 12:29:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 15:45:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void PhoneBook::displayMenu() {
     std::cout << "Please choose among the options:" << std::endl;
     std::cout << "ADD: Add a Contact" << std::endl;
     std::cout << "SEARCH: Get details of a Contact" << std::endl;
-    std::cout << "EXIT: Exit the program" << std::endl;
+    std::cout << "EXIT: Exit the program\n" << std::endl;
+    std::cout << "Option: ";
 }
 
-void PhoneBook::displayBanner(){
-    //system("clear");
+void PhoneBook::displayBanner(bool menu){
+    system("clear");
     std::cout << R"(
 
            █████╗ ██╗    ██╗███████╗███████╗ ██████╗ ███╗   ███╗███████╗          
@@ -41,13 +42,13 @@ void PhoneBook::displayBanner(){
     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ 
                                                                                   
     )" << std::endl;
+    if(menu)
+        displayMenu();
 }
 
 void PhoneBook::choiceAction() {
     std::string action;
-    system("clear");
-    displayBanner();
-    displayMenu();
+    displayBanner(true);
     while (true) {
         std::getline(std::cin, action);
         if (std::cin.eof()) {
@@ -55,19 +56,12 @@ void PhoneBook::choiceAction() {
             std::cout << "\n\nEOF found! Exiting program" << std::endl;
             exit(0);
         }
-        if (action == "EXIT") {
-            std::cout << "Exiting program..." << std::endl;
-            break;
-        }
-        else if (action == "ADD") {
+        if (action == "EXIT")
+            exitProgram();
+        else if (action == "ADD")
             addContact();
-            displayMenu();
-
-        }
-        else if (action == "SEARCH") {
+        else if (action == "SEARCH")
             searchContact();
-            displayMenu();
-        }
         else {
             std::cout << "Incorrect choice. Please try again\n" << std::endl;
         }
@@ -90,7 +84,7 @@ std::string evaluate_input(const std::string& prompt) {
                 std::cout << "\n\nEOF found! Exiting program" << std::endl;
                 exit(0);
             }
-            std::cout << "Input error occurred. Please try again.\n";
+            std::cout << "Input  displayBanner(false);error occurred. Please try again.\n";
         }
     }
 }
@@ -98,7 +92,7 @@ std::string evaluate_input(const std::string& prompt) {
 void  PhoneBook::addContact(){
 
     Contact newContact;
-
+    displayBanner(false);
     std::cout << "\nAdding a member..." << std::endl;
     std::cout << "Please fill the information:\n" << std::endl;
 
@@ -109,14 +103,46 @@ void  PhoneBook::addContact(){
     newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
     contacts[nb_contacts % MAX_CONTACTS] = newContact;
     nb_contacts++;
+    std::cout << "\nMember " << newContact.getNickname() << " added succesfully" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "\nReturning to the menu..." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    displayBanner(true);
 }
 
 void  PhoneBook::displayContact(Contact contact){
+    std::string input;
     std::cout << "First name: " <<  contact.getFirstName() << std::endl;
     std::cout << "Last name: " <<  contact.getLastName() << std::endl;
     std::cout << "Nick name: " <<  contact.getNickname() << std::endl;
     std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;
     std::cout << "Darkest secret: " <<  contact.getDarkestSecret() << std::endl;
+
+    while (true) {
+        std::getline(std::cin, input);
+        if(input != "BACK" && input != "EXIT"){
+            std::cout << "\nType BACK or EXIT to continue\n";
+            continue;
+        }
+        if(input == "BACK"){
+            displayBanner(true);
+            break;
+        } else if (input == "EXIT")
+            exitProgram();
+    }
+}
+
+void PhoneBook::exitProgram(void) {
+    displayBanner(false);
+    std::cout << "\n====================================" << std::endl;
+    std::cout << " Thank you for using the PhoneBook!" << std::endl;
+    std::cout << " Remember: The Cylons might be among" << std::endl;
+    std::cout << " us... Stay vigilant, and trust no" << std::endl;
+    std::cout << " one with your darkest secret!" << std::endl;
+    std::cout << "====================================\n" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::cout << "System disconnected." << std::endl;
+    exit(0);
 }
 
 std::string truncateString(const std::string& str) {
@@ -130,7 +156,6 @@ int getValidNumber() {
     std::string input;
 
     while (true) {
-        std::cout << "Select the contact Index to display: ";
         std::cin >> input;
         if (input.length() == 1 && input[0] >= '0' && input[0] <= '9') {
             return input[0] - '0';
@@ -141,6 +166,7 @@ int getValidNumber() {
 }
 
 void  PhoneBook::searchContact(){
+    displayBanner(false);
     int contact;
     std::cout << "|"
               << std::setw(10) << "Index"
@@ -169,6 +195,7 @@ void  PhoneBook::searchContact(){
                   << "|" << std::endl;
     }
     std::cout << "|------------------------------------------------------|" << std::endl;
+    std::cout << "\nSelect the contact Index to display: ";
     contact = getValidNumber();
     displayContact(contacts[contact]);
 }
