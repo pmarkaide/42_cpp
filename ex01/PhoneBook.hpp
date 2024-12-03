@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:20 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 16:11:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:34:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class PhoneBook {
 
 private:
     Contact contacts[MAX_CONTACTS];
-    int nb_contacts_ = 0;
+    int nbContacts_ = 0;
     void addContact();
     void searchContact();
     void exitProgram();

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 16:26:43 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:33:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static std::string evaluate_input(const std::string& prompt) {
                 std::cout << "\n\nEOF found! Exiting program" << std::endl;
                 exit(0);
             }
-            std::cout << "Input  displayBanner(false);error occurred. Please try again.\n";
+            std::cout << "Input error occurred. Please try again.\n";
         }
     }
 }
@@ -111,7 +111,7 @@ static void displayContact(Contact contact){
 
 // NON STATIC FUNCTIONS
 
-PhoneBook::PhoneBook() : nb_contacts_(0) {}
+PhoneBook::PhoneBook() : nbContacts_(0) {}
 
 void PhoneBook::choiceAction() {
     std::string action;
@@ -148,8 +148,8 @@ void  PhoneBook::addContact(){
     newContact.setNickName(evaluate_input("Nick name: "));
     newContact.setPhoneNumber(evaluate_input("Phone number: "));
     newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
-    contacts[nb_contacts_ % MAX_CONTACTS] = newContact;
-    nb_contacts_++;
+    contacts[nbContacts_ % MAX_CONTACTS] = newContact;
+    nbContacts_++;
     std::cout << "\nMember " << newContact.getNickname() << " added succesfully" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << "\nReturning to the menu..." << std::endl;
@@ -172,7 +172,7 @@ void  PhoneBook::searchContact(){
               << std::setw(10) << "Phone nb"
               << "|" << std::endl;
     std::cout << "|------------------------------------------------------|" << std::endl;
-    int display = std::min(nb_contacts_, MAX_CONTACTS);
+    int display = std::min(nbContacts_, MAX_CONTACTS);
     for (int i = 0; i < display; i++) {
         std::cout << "|"
                   << std::setw(10) << i + 1

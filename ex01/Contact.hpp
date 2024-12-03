@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 16:05:43 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:29:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <string>
 
 class Contact {
+private:
     std::string firstName_;
     std::string lastName_;
     std::string nickName_;
