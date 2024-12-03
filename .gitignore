@@ -1,9 +1,7 @@
 # Ignore everything
-/*
+*
 
-# Don't ignore .cpp and .hpp files
+# But not these files and directories
+!Makefile
 !*.cpp
 !*.hpp
-
-# Allow .gitignore file itself
-!.gitignore
