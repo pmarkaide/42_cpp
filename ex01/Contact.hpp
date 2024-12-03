@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 15:47:24 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:05:43 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ public:
     void setPhoneNumber(const std::string& phoneNumber);
     void setDarkestSecret(const std::string& secret);
 
-    std::string getFirstName();
-    std::string getLastName();
-    std::string getNickname();
-    std::string getPhoneNumber();
-    std::string getDarkestSecret();
+    const std::string& getFirstName() const;;
+    const std::string& getLastName() const;;
+    const std::string& getNickname() const;;
+    const std::string& getPhoneNumber() const;;
+    const std::string& getDarkestSecret() const;;
 };
 
 

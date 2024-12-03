@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 15:48:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:05:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ void Contact::setDarkestSecret(const std::string& secret) {
 }
 
 // Getter Functions
-std::string Contact::getFirstName() {
+const std::string& Contact::getFirstName() const{
     return firstName_;
 }
 
-std::string Contact::getLastName() {
+const std::string& Contact::getLastName() const{
     return lastName_;
 }
 
-std::string Contact::getNickname() {
+const std::string& Contact::getNickname() const{
     return nickName_;
 }
 
-std::string Contact::getPhoneNumber() {
+const std::string& Contact::getPhoneNumber() const{
     return phoneNumber_;
 }
 
-std::string Contact::getDarkestSecret() {
+const std::string& Contact::getDarkestSecret() const{
     return darkestSecret_;
 }
