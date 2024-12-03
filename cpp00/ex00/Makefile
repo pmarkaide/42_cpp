@@ -5,6 +5,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++11
+SANITIZE_FLAGS = -fsanitize=address,undefined -g
 RM = rm -f
 
 all: $(NAME)
@@ -14,7 +15,10 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	
+
+sanitize: clean
+	$(CC) $(CFLAGS) $(SANITIZE_FLAGS) $(SRCS) -o $(NAME)
+
 clean:
 	$(RM) $(OBJS)
 
@@ -23,4 +27,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re sanitize

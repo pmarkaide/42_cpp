@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 16:33:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:00:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void  PhoneBook::searchContact(){
     }
     std::cout << "|------------------------------------------------------|" << std::endl;
     std::cout << "\nSelect the contact Index to display: ";
-    contact = getValidNumber();
+    contact = getValidNumber() -1 ;
     displayContact(contacts[contact]);
 }
 
