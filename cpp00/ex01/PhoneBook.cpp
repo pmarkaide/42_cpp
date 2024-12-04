@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/03 17:09:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/04 22:37:38 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,23 @@
 #include <chrono>           // duration
 
 // STATIC FUNCTIONS
+
+static void displayWelcomeMessage() {
+    std::cout << "Connecting to the server..." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "Connection established!" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "\n====================================" << std::endl;
+    std::cout << "   Welcome aboard the PhoneBook!" << std::endl;
+    std::cout << "   Your data is safe... probably." << std::endl;
+    std::cout << "   Remember: Trust no toaster!" << std::endl;
+    std::cout << "   Stay sharp. The Cylons could be" << std::endl;
+    std::cout << "   anywhere, even in your contacts." << std::endl;
+    std::cout << "====================================\n" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(4));
+    std::cout << "\nRedirecting to the console...\n" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
 
 static void displayMenu() {
     std::cout << "Please choose among the options:" << std::endl;
@@ -58,14 +75,14 @@ static std::string evaluate_input(const std::string& prompt) {
             if (!input.empty()) {
                 return input;
             }
-            std::cout << "Input cannot be empty. Please try again.\n";
+            std::cout << "Input cannot be empty. Please try again\n";
         } else {
             if (std::cin.eof()) {
                 std::cin.clear();
-                std::cout << "\n\nEOF found! Exiting program" << std::endl;
+                std::cout << "\n\nEOF found! Exiting program..." << std::endl;
                 exit(0);
             }
-            std::cout << "Input error occurred. Please try again.\n";
+            std::cout << "Input error occurred. Please try again\n";
         }
     }
 }
@@ -77,22 +94,24 @@ static std::string truncateString(const std::string& str) {
     return str;
 }
 
-static int getValidNumber() {
+static int getValidNumber(int nbContacts_) {
     std::string input;
 
     while (true) {
         std::cin >> input;
-        if (input.length() == 1 && input[0] >= '0' && input[0] <= '9') {
-            return input[0] - '0';
-        } else {
-            std::cout << "Invalid input. Please enter a single digit between 0 and 9." << std::endl;
+        if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
+            int number = input[0] - '0';
+            if(number <= nbContacts_)
+                return number;
         }
+        std::cout << "\nInvalid input\nPlease enter a single digit between 1 and " << nbContacts_ << std::endl;
+        std::cout << "Index: ";
     }
 }
 
 static void displayContact(Contact contact){
     std::string input;
-    std::cout << "First name: " <<  contact.getFirstName() << std::endl;
+    std::cout << "\nFirst name: " <<  contact.getFirstName() << std::endl;
     std::cout << "Last name: " <<  contact.getLastName() << std::endl;
     std::cout << "Nick name: " <<  contact.getNickname() << std::endl;
     std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;
@@ -118,6 +137,8 @@ PhoneBook::~PhoneBook() {}
 
 void PhoneBook::choiceAction() {
     std::string action;
+    displayBanner(false);
+    displayWelcomeMessage();
     displayBanner(true);
     while (true) {
         std::getline(std::cin, action);
@@ -161,8 +182,13 @@ void  PhoneBook::addContact(){
 }
 
 void  PhoneBook::searchContact(){
+    if(nbContacts_ == 0)
+    {
+        std::cout << "You need to ADD a contact before using SEARCH" << std::endl;
+        std::cout << "\nOption: ";
+        return;
+    }
     displayBanner(false);
-    int contact;
     std::cout << "|"
               << std::setw(10) << "Index"
               << "|"
@@ -190,8 +216,9 @@ void  PhoneBook::searchContact(){
                   << "|" << std::endl;
     }
     std::cout << "|------------------------------------------------------|" << std::endl;
-    std::cout << "\nSelect the contact Index to display: ";
-    contact = getValidNumber() -1 ;
+    std::cout << "\nType a Index number to get details of a contact" << std::endl;
+    std::cout << "Index: ";
+    int contact = getValidNumber(nbContacts_) - 1 ;
     displayContact(contacts[contact]);
 }
 
@@ -204,7 +231,7 @@ void PhoneBook::exitProgram() {
     std::cout << " one with your darkest secret!" << std::endl;
     std::cout << "====================================\n" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(3));
-    std::cout << "System disconnected." << std::endl;
+    std::cout << "System disconnected" << std::endl;
     exit(0);
 }
 
