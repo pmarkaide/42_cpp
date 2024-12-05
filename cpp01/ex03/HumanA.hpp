@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:48:36 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 18:02:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:20:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class HumanA {
 	private:
 		std::string name_;
-		Weapon weapon_;
+		Weapon& weapon_;
 		
 	public:
 		HumanA(std::string name, Weapon& weapon);
