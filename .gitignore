@@ -1,7 +1,11 @@
-# Ignore everything
+# Ignore all files without extension
 *
+!/**/
+!*.*
 
-# But not these files and directories
+# Except these
 !Makefile
-!*.cpp
-!*.hpp
+
+# Ignore these
+*.o
+*.code-workspace
