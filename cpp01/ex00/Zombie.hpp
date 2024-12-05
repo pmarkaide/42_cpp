@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:51:03 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 13:32:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:12:18 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
  #define ZOMBIE_HPP
 
 # include <string>
+# include <iostream>
 
 class Zombie {
 	private:
@@ -24,5 +25,8 @@ class Zombie {
 		~Zombie();
 		void announce(void);
 };
+
+Zombie* newZombie( std::string name );
+void randomChump( std::string name );
 
 #endif  // ZOMBIE_HPP

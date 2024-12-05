@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:51:06 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 13:42:33 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:14:57 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # include <iostream>
 
 // Constructor with initializer list
-Zombie::Zombie(std::string zombieName) : name_(zombieName) {}
+Zombie::Zombie(std::string zombieName) : name_(zombieName) {
+	std::cout << "Zombie " << name_ << " created.\n";
+}
 
 // Destructor
 Zombie::~Zombie(){
