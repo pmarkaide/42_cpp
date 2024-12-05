@@ -6,11 +6,11 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/05 16:13:58 by pmarkaid          #+#    #+#              #
-#    Updated: 2024/12/05 16:17:17 by pmarkaid         ###   ########.fr        #
+#    Updated: 2024/12/05 21:12:47 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = brain
+NAME = violence
 
 SRCS = 					\
 		main.cpp		\

@@ -6,9 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:17:45 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 16:58:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:52:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef WEAPON_HPP
+ #define WEAPON_HPP
 
 # include <string>
 
@@ -21,3 +24,5 @@ class Weapon {
 		const std::string& getType() const;
 		void setType(const std::string& newType);
 };
+
+#endif // WEAPON_HPP

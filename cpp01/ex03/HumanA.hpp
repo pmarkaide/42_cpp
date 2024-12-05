@@ -6,19 +6,23 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:48:36 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 16:53:38 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:02:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef HUMANA_HPP
+ #define HUMANA_HPP
+
 # include "Weapon.hpp"
-# include <string>
 
 class HumanA {
 	private:
-		Weapon weapon_;
 		std::string name_;
+		Weapon weapon_;
 		
 	public:
-		HumanA(std::string type);
+		HumanA(std::string name, Weapon& weapon);
 		void attack(void);
 };
+
+#endif // HUMANA_HPP
