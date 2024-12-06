@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:26:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/06 16:50:37 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:10:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ std::string read_file(const std::string& filename) {
 	return contents;
 }
 
+
+
 void replace(const std::string& infile, const std::string& s1, const std::string& s2)
 {
 	std::string fileContents;
-	(void)s1;
-	(void)s2;
+
 	try {
 		fileContents = read_file(infile);
 
@@ -54,8 +55,16 @@ void replace(const std::string& infile, const std::string& s1, const std::string
 		std::cerr << "Error: " << e.what() << std::endl;
 		return; 
 	}
-	// search s1 index
-	std::cout << fileContents << std::endl;
-	// replace s1 by s2
-	// write into outfile
+	
+	size_t pos = 0;
+	std::string modifiedContents;
+
+	while ((pos = fileContents.find(s1, pos)) != std::string::npos) {
+		modifiedContents += fileContents.substr(0, pos);
+		modifiedContents += s2;
+		pos += s1.length();
+		fileContents = fileContents.substr(pos);
+	}
+	modifiedContents += fileContents;
+	std::cout << modifiedContents;
 }
