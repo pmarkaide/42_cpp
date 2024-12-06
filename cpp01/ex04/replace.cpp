@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:26:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/06 17:10:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:11:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,26 @@ std::string read_file(const std::string& filename) {
 	return contents;
 }
 
+void write_file(const std::string& filename, const std::string& content) {
+	std::ofstream file(filename);
 
+	if (!file) {
+		throw std::runtime_error("Cannot open file for writing: " + filename);
+	}
+
+	file.exceptions(std::ofstream::badbit | std::ofstream::failbit);
+
+	try {
+		file << content;
+
+		if (file.bad()) {
+			throw std::runtime_error("Error writing to file");
+		}
+	}
+	catch (const std::exception& e) {
+		throw std::runtime_error("File write error: " + std::string(e.what()));
+	}
+}
 
 void replace(const std::string& infile, const std::string& s1, const std::string& s2)
 {
@@ -66,5 +85,5 @@ void replace(const std::string& infile, const std::string& s1, const std::string
 		fileContents = fileContents.substr(pos);
 	}
 	modifiedContents += fileContents;
-	std::cout << modifiedContents;
+	write_file(infile + ".replace", modifiedContents);
 }
