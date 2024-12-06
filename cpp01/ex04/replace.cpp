@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:26:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/06 16:07:33 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:50:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,37 @@
 #include <fstream>
 #include <iostream>
 
-std::string read_file(const std::string &filename) {
+std::string read_file(const std::string& filename) {
 	std::ifstream file(filename);
 
-	file.exceptions(std::ios_base::failbit | std::ios_base::badbit);
-
-	if (!file.is_open()) {
-		throw std::ios_base::failure("Failed to open the file!");
+	if (!file) {
+		throw std::runtime_error("Cannot open file: " + filename);
 	}
 
-	std::string line, fileContents;
+	std::string contents, line;
+	file.exceptions(std::ifstream::badbit);
 	try {
 		while (std::getline(file, line)) {
-			fileContents += line + "\n";
+			contents += line + '\n';
 		}
-	} catch (const std::ios_base::failure &e) {
-		std::cerr << "File reading error: " << e.what() << std::endl;
-		file.close();
-		throw;
+		if (file.bad()) {
+			throw std::runtime_error("Error reading file");
+		}
 	}
-	file.close();
-	return fileContents;
+	catch (const std::exception& e) {
+		throw std::runtime_error("File read error: " + std::string(e.what()));
+	}
+
+	return contents;
 }
 
-void replace(std::string& infile, std::string& s1, std::string& s2)
+void replace(const std::string& infile, const std::string& s1, const std::string& s2)
 {
+	std::string fileContents;
+	(void)s1;
+	(void)s2;
 	try {
-		std::string fileContents = read_file(infile);
+		fileContents = read_file(infile);
 
 		if (fileContents.empty()) {
 			std::cerr << "The file is empty!" << std::endl;
@@ -51,7 +55,7 @@ void replace(std::string& infile, std::string& s1, std::string& s2)
 		return; 
 	}
 	// search s1 index
-
+	std::cout << fileContents << std::endl;
 	// replace s1 by s2
 	// write into outfile
 }
