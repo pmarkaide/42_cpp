@@ -6,12 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:06:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/07 17:11:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:46:25 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <string>
 # include <iostream>
+#include <map>
 
 class Harl {
 	private:

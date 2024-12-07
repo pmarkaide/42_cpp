@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:06:03 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/07 17:38:43 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:50:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,11 @@
 int main(void)
 {
 	Harl harl;
+
 	harl.complain("debug");
+	harl.complain("info");
+	harl.complain("warning");
+	harl.complain("error");
+	harl.complain("unknown");
+	return 0;
 }

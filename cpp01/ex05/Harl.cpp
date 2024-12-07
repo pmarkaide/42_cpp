@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 17:06:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/07 17:39:06 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:53:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,17 @@ void Harl::error( void ){
 
 void Harl::complain( std::string level ){
 	void (Harl::*func[])() = { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error };
-	
-	int index = 0; 
-	level = "hello";
-	(this->*func[index])();	
-}
+
+	std::map<std::string, int> levelMap = {
+			{"debug", 0},
+			{"info", 1},
+			{"warning", 2},
+			{"error", 3}
+		};
+
+	std::map<std::string, int>::iterator it = levelMap.find(level);
+	if (it != levelMap.end())
+		(this->*func[it->second])();
+	else
+		std::cout << "Invalid level!" << std::endl;
+};
