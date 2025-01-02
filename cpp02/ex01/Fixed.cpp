@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:58:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 11:58:18 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 12:46:19 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 Fixed::Fixed() : fixedPoint_(0) {
 	std::cout << "Default constructor called" << std::endl;
+}
+
+Fixed::Fixed(const int nb) : fixedPoint_(nb << fractionalBits_){
+	std::cout << "Int based constructor called" << std::endl;
+}
+
+Fixed::Fixed(const float n) : fixedPoint_(roundf(n * (1 << fractionalBits_))) {
+    std::cout << "Float constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& src): fixedPoint_(src.fixedPoint_){
