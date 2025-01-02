@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:32 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 14:04:34 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:37:53 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ class Fixed  {
 		void setRawBits(int const raw);
 		float toFloat(void) const;
 		int toInt(void) const;
+
+		friend Fixed operator+(const Fixed &one, const Fixed &two);
+		friend Fixed operator-(const Fixed &one, const Fixed &two);
+		friend Fixed operator*(const Fixed &one, const Fixed &two);
+		friend Fixed operator/(const Fixed &one, const Fixed &two);
 };
 
 #endif // FIXED_HPP

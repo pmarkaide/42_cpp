@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 14:04:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:35:19 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,28 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
 	// Convert the fixed-point number to float and insert it into the stream
 	os << fixed.toFloat();
 	return os;
+}
+
+Fixed operator+(const Fixed &one, const Fixed &two) {
+	Fixed result;
+	result.setRawBits(one.getRawBits() + two.getRawBits());
+	return result;
+}
+
+Fixed operator-(const Fixed &one, const Fixed &two) {
+	Fixed result;
+	result.setRawBits(one.getRawBits() - two.getRawBits());
+	return result;
+}
+
+Fixed operator*(const Fixed &one, const Fixed &two) {
+	Fixed result;
+	result.setRawBits(one.getRawBits() * two.getRawBits());
+	return result;
+}
+
+Fixed operator/(const Fixed &one, const Fixed &two) {
+	Fixed result;
+	result.setRawBits(one.getRawBits() / two.getRawBits());
+	return result;
 }
