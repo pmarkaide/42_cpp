@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:32 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 14:37:53 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:51:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <cmath>
+# include <climits>
 
 class Fixed  {
 	private:
@@ -35,10 +36,10 @@ class Fixed  {
 		float toFloat(void) const;
 		int toInt(void) const;
 
-		friend Fixed operator+(const Fixed &one, const Fixed &two);
-		friend Fixed operator-(const Fixed &one, const Fixed &two);
-		friend Fixed operator*(const Fixed &one, const Fixed &two);
-		friend Fixed operator/(const Fixed &one, const Fixed &two);
+		Fixed operator+(const Fixed &other) const;
+		Fixed operator-(const Fixed &other) const;
+		Fixed operator*(const Fixed &other) const;
+		Fixed operator/(const Fixed &other) const;
 };
 
 #endif // FIXED_HPP

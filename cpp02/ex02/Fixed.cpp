@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 14:35:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:53:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ Fixed & Fixed::operator=(Fixed const & src){
 }
 
 int Fixed::getRawBits() const {
-	std::cout << "getRawBits function called" << std::endl;
 	return fixedPoint_;
 }
 
 void Fixed::setRawBits(int const raw){
-	std::cout << "setRawBits function called" << std::endl;
 	fixedPoint_ = raw;
 }
 
@@ -64,26 +62,51 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
 	return os;
 }
 
-Fixed operator+(const Fixed &one, const Fixed &two) {
+Fixed Fixed::operator+(const Fixed &other) const {
 	Fixed result;
-	result.setRawBits(one.getRawBits() + two.getRawBits());
+
+	long long temp = static_cast<long long>(this->getRawBits()) + static_cast<long long>(other.getRawBits());
+		
+	if (temp > INT_MAX || temp < INT_MIN)
+		throw std::overflow_error("Fixed-point addition overflow");
+		
+	result.setRawBits(static_cast<int>(temp));
 	return result;
 }
 
-Fixed operator-(const Fixed &one, const Fixed &two) {
+Fixed Fixed::operator-(const Fixed &other) const {
 	Fixed result;
-	result.setRawBits(one.getRawBits() - two.getRawBits());
+
+	long long temp = static_cast<long long>(this->getRawBits()) - static_cast<long long>(other.getRawBits());
+		
+	if (temp > INT_MAX || temp < INT_MIN)
+		throw std::overflow_error("Fixed-point subtraction overflow");
+		
+	result.setRawBits(static_cast<int>(temp));
 	return result;
 }
 
-Fixed operator*(const Fixed &one, const Fixed &two) {
+Fixed Fixed::operator*(const Fixed &other) const {
 	Fixed result;
-	result.setRawBits(one.getRawBits() * two.getRawBits());
+
+	long long temp = static_cast<long long>(this->getRawBits()) * static_cast<long long>(other.getRawBits());
+	temp = temp >> fractionalBits_;
+	if (temp > INT_MAX || temp < INT_MIN)
+		throw std::overflow_error("Fixed-point multiplication overflow");
+	result.setRawBits(static_cast<int>(temp));
 	return result;
 }
 
-Fixed operator/(const Fixed &one, const Fixed &two) {
+Fixed Fixed::operator/(const Fixed &other) const {
+	if (other.getRawBits() == 0)
+		throw std::runtime_error("Division by zero");
+
 	Fixed result;
-	result.setRawBits(one.getRawBits() / two.getRawBits());
+
+	long long temp = static_cast<long long>(this->getRawBits()) << fractionalBits_;
+	temp = temp / other.getRawBits();
+	if (temp > INT_MAX || temp < INT_MIN)
+		throw std::overflow_error("Fixed-point division overflow");
+	result.setRawBits(static_cast<int>(temp));
 	return result;
 }
