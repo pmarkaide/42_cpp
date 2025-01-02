@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 14:53:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:01:32 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,28 @@ Fixed Fixed::operator/(const Fixed &other) const {
 		throw std::overflow_error("Fixed-point division overflow");
 	result.setRawBits(static_cast<int>(temp));
 	return result;
+}
+
+bool Fixed::operator>(const Fixed &other) const {
+	return this->getRawBits() > other.getRawBits();
+}
+
+bool Fixed::operator<(const Fixed &other) const {
+	return this->getRawBits() < other.getRawBits();
+}
+
+bool Fixed::operator>=(const Fixed &other) const {
+	return this->getRawBits() >= other.getRawBits();
+}
+
+bool Fixed::operator<=(const Fixed &other) const {
+	return this->getRawBits() <= other.getRawBits();
+}
+
+bool Fixed::operator==(const Fixed &other) const {
+	return this->getRawBits() == other.getRawBits();
+}
+
+bool Fixed::operator!=(const Fixed &other) const {
+	return this->getRawBits() != other.getRawBits();
 }
