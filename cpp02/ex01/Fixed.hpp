@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:58:27 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 12:46:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 13:23:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
  #define FIXED_HPP
 
 # include <iostream>
-# include <math.h>
+# include <cmath>
 
 class Fixed  {
 	private:
@@ -29,9 +29,12 @@ class Fixed  {
 		Fixed(const Fixed& src); // Copy constructor
 		~Fixed(); // Destructor
 		Fixed &operator=(const Fixed& src); // Copy Assigment Operator
+		friend std::ostream& operator<<(std::ostream& os, const Fixed& fixed);
 
 		int getRawBits(void) const;
 		void setRawBits(int const raw);
+		float toFloat(void) const;
+		int toInt(void) const;
 };
 
 #endif // FIXED_HPP

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 11:58:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 12:46:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 13:24:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ Fixed::Fixed() : fixedPoint_(0) {
 }
 
 Fixed::Fixed(const int nb) : fixedPoint_(nb << fractionalBits_){
-	std::cout << "Int based constructor called" << std::endl;
+	std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float n) : fixedPoint_(roundf(n * (1 << fractionalBits_))) {
-    std::cout << "Float constructor called" << std::endl;
+	std::cout << "Float constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& src): fixedPoint_(src.fixedPoint_){
@@ -48,4 +48,18 @@ int Fixed::getRawBits() const {
 void Fixed::setRawBits(int const raw){
 	std::cout << "setRawBits function called" << std::endl;
 	fixedPoint_ = raw;
+}
+
+int Fixed::toInt(void) const{
+	return (fixedPoint_ >> fractionalBits_);
+}
+
+float Fixed::toFloat(void) const{
+	return (float)fixedPoint_ / (1 << fractionalBits_);
+}
+
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
+	// Convert the fixed-point number to float and insert it into the stream
+	os << fixed.toFloat();
+	return os;
 }
