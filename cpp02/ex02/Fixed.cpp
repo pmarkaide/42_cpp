@@ -6,34 +6,34 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 15:01:32 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:47:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Fixed.hpp"
 
 Fixed::Fixed() : fixedPoint_(0) {
-	std::cout << "Default constructor called" << std::endl;
+	//std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const int nb) : fixedPoint_(nb << fractionalBits_){
-	std::cout << "Int constructor called" << std::endl;
+	//std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float n) : fixedPoint_(roundf(n * (1 << fractionalBits_))) {
-	std::cout << "Float constructor called" << std::endl;
+	//std::cout << "Float constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& src): fixedPoint_(src.fixedPoint_){
-	std::cout << "Copy constructor called" << std::endl;
+	//std::cout << "Copy constructor called" << std::endl;
 }
 
 Fixed::~Fixed(){
-	std::cout << "Destructor called" << std::endl;
+	//std::cout << "Destructor called" << std::endl;
 }
 
 Fixed & Fixed::operator=(Fixed const & src){
-	std::cout << "Copy Assignation operator called" << std::endl;
+	//std::cout << "Copy Assignation operator called" << std::endl;
 	if (this != &src) {  // Self-assignment check
 		fixedPoint_ = src.getRawBits();
 	}
@@ -133,4 +133,26 @@ bool Fixed::operator==(const Fixed &other) const {
 
 bool Fixed::operator!=(const Fixed &other) const {
 	return this->getRawBits() != other.getRawBits();
+}
+
+Fixed& Fixed::operator++() {
+	fixedPoint_ += 1;
+	return *this;
+}
+
+Fixed Fixed::operator++(int) {
+	Fixed temp(*this);
+	fixedPoint_ += 1;
+	return temp;        // Return the copy (original value)
+}
+
+Fixed& Fixed::operator--() {
+	fixedPoint_ -= 1;
+	return *this;
+}
+
+Fixed Fixed::operator--(int) {
+	Fixed temp(*this);
+	fixedPoint_ -= 1;
+	return temp;        // Return the copy (original value)
 }
