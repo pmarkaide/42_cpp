@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:48 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 15:47:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:07:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ Fixed& Fixed::operator++() {
 Fixed Fixed::operator++(int) {
 	Fixed temp(*this);
 	fixedPoint_ += 1;
-	return temp;        // Return the copy (original value)
+	return temp;		// return the copy (original value)
 }
 
 Fixed& Fixed::operator--() {
@@ -154,5 +154,31 @@ Fixed& Fixed::operator--() {
 Fixed Fixed::operator--(int) {
 	Fixed temp(*this);
 	fixedPoint_ -= 1;
-	return temp;        // Return the copy (original value)
+	return temp;		// return the copy (original value)
+}
+
+// in case of equality, first argument is returned,
+// as std::min does
+Fixed& Fixed::min(Fixed &a, Fixed &b){
+	if(b < a)			
+		return b;
+	return a;
+}
+
+Fixed& Fixed::max(Fixed &a, Fixed &b){
+	if(b > a)
+		return b;
+	return a;
+}
+
+const Fixed& Fixed::min(const Fixed &a, const Fixed &b){
+	if(b < a)
+		return b;
+	return a;
+}
+
+const Fixed& Fixed::max(const Fixed &a, const Fixed &b){
+	if(b > a)
+		return b;
+	return a;
 }

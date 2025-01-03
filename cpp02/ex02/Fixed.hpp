@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:04:32 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/02 15:47:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:59:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ class Fixed  {
 		Fixed operator++(int); // Post-increment
 		Fixed& operator--(); // Pre-decrement
 		Fixed operator--(int); // Post-decrement
+
+		static Fixed &min(Fixed &a, Fixed &b);
+		static Fixed &max(Fixed &a, Fixed &b);
+		static const Fixed &min(const Fixed &a, const Fixed &b);
+		static const Fixed &max(const Fixed &a, const Fixed &b);
 };
 
 #endif // FIXED_HPP
