@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:21:58 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 11:30:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:13:21 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,46 @@ ClapTrap & ClapTrap::operator=(ClapTrap const & src){
 
 ClapTrap::~ClapTrap(){
 	std::cout << "Destructor called" << std::endl;
+}
+
+// Functions
+
+void ClapTrap::attack(const std::string& target){
+	if (energyPoints_ <= 0) {
+		std::cout << "ClapTrap " << name_ << " has no energy to attack!" << std::endl;
+		return;
+	}
+	if (hitPoints_ <= 0) {
+		std::cout << "ClapTrap " << name_ << " is dead, cannot attack!" << std::endl;
+		return;
+	}
+	energyPoints_--;
+	std::cout << "ClapTrap " << name_ << " attacks " << target << ", causing " << attackDamage_ << " points of damage!"  << std::endl;
+}
+
+void ClapTrap::takeDamage(unsigned int amount){
+	if (hitPoints_ <= 0) {
+		std::cout << "ClapTrap " << name_ << " is already dead, he cannot take more hitPoints!" << std::endl;
+		return;
+	}
+	hitPoints_ -= amount;
+	std::cout << "ClapTrap " << name_ << " has taken " << amount << " hitPoints of damage";
+	if (hitPoints_ <= 0) {
+		std::cout << " and now is DEAD!";
+	}
+	std::cout << std::endl;
+}
+
+void ClapTrap::beRepaired(unsigned int amount){
+	if (energyPoints_ <= 0) {
+		std::cout << "ClapTrap " << name_ << " has no energy to repair himself!" << std::endl;
+		return;
+	}
+	if (hitPoints_ <= 0) {
+		std::cout << "ClapTrap " << name_ << " is dead, he cannot repair himself!" << std::endl;
+		return;
+	}
+	hitPoints_ += amount;
+	std::cout << "ClapTrap " << name_ << " repair himself by " << amount << " points of hitPoints!"  << std::endl;
 }
 
