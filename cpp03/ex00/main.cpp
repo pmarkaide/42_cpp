@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 11:09:21 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 11:09:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 11:32:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int main(void){
 	
+	ClapTrap a("Fred");
+	ClapTrap b = a;
+	ClapTrap c("Tim");
+
+	c = a;
 	
 }

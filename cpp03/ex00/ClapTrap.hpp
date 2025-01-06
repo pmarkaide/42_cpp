@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:22:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 11:08:42 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 11:34:33 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 
 class ClapTrap{
 	private:
-		std::string name;
+		std::string name_;
 		int hitPoints_;
 		int energyPoints_;
 		int attackDamage_;
 		
 	public:
-		ClapTrap(const std::string& name);
+		ClapTrap(const std::string& name);  // Constructor
+		ClapTrap(const ClapTrap& src);  // Copy constructor
+		ClapTrap &operator=(const ClapTrap& src); // Copy Assignment operator
+		~ClapTrap();
+		
 		void attack(const std::string& target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);
