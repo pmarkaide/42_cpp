@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:22:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 13:08:57 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:43:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 
 class ClapTrap{
-	private:
+	protected:
 		std::string name_;
 		int hitPoints_;
 		int energyPoints_;
@@ -28,9 +28,9 @@ class ClapTrap{
 		ClapTrap &operator=(const ClapTrap& src); // Copy Assignment operator
 		virtual ~ClapTrap();
 		
-		void attack(const std::string& target);
-		void takeDamage(unsigned int amount);
-		void beRepaired(unsigned int amount);
+		virtual void attack(const std::string& target);
+		virtual void takeDamage(unsigned int amount);
+		virtual void beRepaired(unsigned int amount);
 };
 
 #endif // CLAPTRAP_HPP

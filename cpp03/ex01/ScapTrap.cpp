@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 12:39:49 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 13:47:59 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:10:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 // Constructors and Destructors
 ScapTrap::ScapTrap(const std::string& name):
-	ClapTrap(name),
-	hitPoints_(100),
-	energyPoints_(50),
-	attackDamage_(20){
+	ClapTrap(name){
+	hitPoints_ = 100;
+	energyPoints_ = 50;
+	attackDamage_= 20;
 
 	std::cout << "ScapTrap Constructor called" << std::endl;
 }
@@ -35,5 +35,22 @@ ScapTrap & ScapTrap::operator=(ScapTrap const & src){
 }
 
 ScapTrap::~ScapTrap(){
-	std::cout << "ScapTrap  Destructor called" << std::endl;
+	std::cout << "ScapTrap Destructor called" << std::endl;
+}
+
+void ScapTrap::attack(const std::string& target){
+	if (energyPoints_ <= 0) {
+		std::cout << "ScapTrap " << name_ << " has no energy to attack!" << std::endl;
+		return;
+	}
+	if (hitPoints_ <= 0) {
+		std::cout << "ScapTrap " << name_ << " is dead, cannot attack!" << std::endl;
+		return;
+	}
+	energyPoints_--;
+	std::cout << "ScapTrap " << name_ << " attacks " << target << ", causing " << attackDamage_ << " points of damage!"  << std::endl;
+}
+
+void ScapTrap::guardGate(){
+	std::cout << "ScapTrap " << name_ << " entered Guard Keeper Mode" << std::endl;
 }

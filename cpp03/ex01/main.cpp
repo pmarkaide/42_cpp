@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 11:09:21 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 13:48:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:03:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,17 @@
 int main(void){
 	
 	std::cout << std::endl;
-	ClapTrap a("Test");
+	
+	ClapTrap a("Carl");
 	std::cout << std::endl;
-	ScapTrap b("test2");
+	
+	ScapTrap b("Steve");
+	std::cout << std::endl;
+
+	b.guardGate();
+	std::cout << std::endl;
+
+	b.attack("Tom");
 	std::cout << std::endl;
 	
 }
