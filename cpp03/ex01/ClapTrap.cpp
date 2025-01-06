@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:21:58 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 12:16:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/06 13:44:23 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ ClapTrap::ClapTrap(const std::string& name) :
 	energyPoints_(10),
 	attackDamage_(0)
 	{
-	std::cout << "Constructor called" << std::endl;
+	std::cout << "ClapTrap Constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& src):
@@ -28,22 +28,22 @@ ClapTrap::ClapTrap(const ClapTrap& src):
 	energyPoints_(src.energyPoints_),
 	attackDamage_(src.attackDamage_)
 	{
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "ClapTrap Copy constructor called" << std::endl;
 }
 
 ClapTrap & ClapTrap::operator=(ClapTrap const & src){
-	std::cout << "Copy Assignment operator called" << std::endl;
 	if (this != &src) {
 		name_ = src.name_;
 		hitPoints_ = src.hitPoints_;
 		energyPoints_ = src.energyPoints_;
 		attackDamage_ = src.attackDamage_;
 	}
+	std::cout << "ClapTrap Copy Assignment operator called" << std::endl;
 	return *this;
 }
 
 ClapTrap::~ClapTrap(){
-	std::cout << "Destructor called" << std::endl;
+	std::cout << "ClapTrap Destructor called" << std::endl;
 }
 
 // Functions
