@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 11:51:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 12:18:56 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:37:30 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 
 class Cat: public Animal {
 	public:
-		Cat();
-		~Cat() override;
+		Cat();								// Default constructor
+		Cat(const Cat& other);				// Copy constructor
+		Cat& operator=(const Cat& other);	// Copy assignment operator
+		~Cat() override;					// Destructor
+	
 		void makeSound() const override;
 };
 

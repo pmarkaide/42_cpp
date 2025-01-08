@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 11:23:32 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 11:41:07 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:38:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,20 @@ Animal::Animal(): type_("Animal"){
 	std::cout << "Animal constructor called" << std::endl;	
 }
 
-Animal::Animal(std::string type): type_(type){
-	std::cout << "Animal constructor called as " << type << std::endl;
+Animal::Animal(std::string t): type_(t){
+	std::cout << "Animal constructor called" << std::endl;
+}
+
+Animal::Animal(const Animal& other): type_(other.type_) {
+	std::cout << "Animal copy constructor called" << std::endl;
+}
+
+Animal& Animal::operator=(const Animal& other) {
+	std::cout << "Animal copy assignment operator called" << std::endl;
+	if (this != &other) {
+		type_ = other.type_;
+	}
+	return *this;
 }
 
 Animal::~Animal(){

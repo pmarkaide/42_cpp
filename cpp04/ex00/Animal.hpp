@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:06:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 12:08:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:38:00 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ class Animal{
 	public:
 		Animal();
 		Animal(std::string t);
+		Animal(const Animal &other);
+		Animal &operator=(const Animal &other);
 		virtual ~Animal();
 
 		std::string getType() const;
