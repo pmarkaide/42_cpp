@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:52:39 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 14:55:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:31:36 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class FragTrap : public ClapTrap{
 		FragTrap &operator=(const FragTrap& src); // Copy Assignment operator
 		~FragTrap();
 
-		void FragTrap::highFivesGuys(void);
+		void highFivesGuys(void);
 };
 
 #endif // FRAGTRAP_HPP

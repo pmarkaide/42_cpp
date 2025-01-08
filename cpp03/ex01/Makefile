@@ -6,17 +6,17 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 10:21:18 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/06 12:39:42 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/08 09:27:00 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = scaptrap
+NAME = scavtrap
 
 SRCS = 					\
 		main.cpp 		\
 		ClapTrap.cpp	\
-		ScapTrap.cpp
+		ScavTrap.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

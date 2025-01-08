@@ -6,12 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:50:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/06 14:51:20 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:33:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ClapTrap.hpp"
-# include "ScapTrap.hpp"
+# include "ScavTrap.hpp"
+# include "FragTrap.hpp"
 
 int main(void){
 	
@@ -20,13 +21,19 @@ int main(void){
 	ClapTrap a("Carl");
 	std::cout << std::endl;
 	
-	ScapTrap b("Steve");
+	ScavTrap b("Steve");
 	std::cout << std::endl;
 
 	b.guardGate();
 	std::cout << std::endl;
 
 	b.attack("Tom");
+	std::cout << std::endl;
+	
+	FragTrap c("Fred");
+	std::cout << std::endl;
+	
+	c.highFivesGuys();
 	std::cout << std::endl;
 	
 }

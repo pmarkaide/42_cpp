@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 14:50:12 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/06 14:51:50 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/08 09:27:11 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = fragtrap
 SRCS = 					\
 		main.cpp 		\
 		ClapTrap.cpp	\
-		ScapTrap.cpp	\
+		ScavTrap.cpp	\
 		FragTrap.cpp
 
 OBJS = $(SRCS:.cpp=.o)
