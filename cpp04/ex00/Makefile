@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 10:04:37 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/08 12:15:54 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/08 12:48:17 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRCS = 					\
 		main.cpp 		\
 		Animal.cpp		\
 		Dog.cpp			\
-		Cat.cpp
+		Cat.cpp			\
+		WrongAnimal.cpp	\
+		WrongCat.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)
