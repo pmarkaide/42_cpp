@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:35:04 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 14:46:06 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:48:23 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class Brain {
 		Brain(const Brain &other);
 		Brain &operator=(const Brain &other);
 		~Brain();
-};
 
+		void setIdea(int index, const std::string& idea);
+		const std::string& getIdea(int index) const;
+};
 #endif // BRAIN_HPP
