@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 11:23:32 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 11:27:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:41:07 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Animal::~Animal(){
 	std::cout << "Animal destructor called" << std::endl;
 }
 
-void Animal::makeSound(){
+void Animal::makeSound() const{
 	std::cout << "Animal sound" << std::endl;
 }
 

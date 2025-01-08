@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:06:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/08 11:26:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:08:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ class Animal{
 	protected:
 		std::string type_;
 
-	
 	public:
 		Animal();
 		Animal(std::string t);
-		virtual ~Animal() {}
+		virtual ~Animal();
 
-		virtual void makeSound();
-		virtual std::string getType() const;
+		std::string getType() const;
+		virtual void makeSound() const;
 };
 
 #endif // ANIMAL_HPP

@@ -6,11 +6,11 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 10:04:37 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/08 10:05:23 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/08 12:15:54 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = claptrap
+NAME = animal
 
 SRCS = 					\
 		main.cpp 		\
