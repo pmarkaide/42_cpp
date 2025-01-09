@@ -6,17 +6,19 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 14:31:58 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/09 11:44:37 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/09 15:47:51 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = brain
+NAME = materia
 
-SRCS = 					\
-		main.cpp		\
-		AMateria.cpp	\
-		ICharacter.cpp	\
-		IMateriaSource.cpp
+SRCS = 						\
+		main.cpp			\
+		MateriaSource.cpp	\
+		AMateria.cpp		\
+		Character.cpp		\
+		Cure.cpp			\
+		Ice.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

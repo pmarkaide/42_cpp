@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:31:39 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 11:46:59 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:42:34 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@
 class AMateria
 {
 	protected:
+		std::string type_;
 
 	public:
+		AMateria();
 		AMateria(std::string const & type);
-		std::string const & getType() const; //Returns the materia type
+		AMateria(const AMateria &other) = delete;
+		AMateria &operator=(const AMateria &other) = delete;
+		virtual ~AMateria();
+
+		std::string const & getType() const;
 		virtual AMateria* clone() const = 0;
 		virtual void use(ICharacter& target);
 };
