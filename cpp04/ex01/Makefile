@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 14:31:58 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/01/08 14:33:00 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/01/09 09:04:15 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,14 @@ SRCS = 					\
 		main.cpp 		\
 		Animal.cpp		\
 		Dog.cpp			\
-		Cat.cpp
+		Cat.cpp			\
+		Brain.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11
+CFLAGS = -Wall -Wextra -Werror -std=c++11 -g
 SANITIZE_FLAGS = -fsanitize=address,undefined -g
 RM = rm -f
 
