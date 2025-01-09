@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 14:31:35 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 09:03:22 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 10:29:10 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Dog& Dog::operator=(const Dog& other) {
 	std::cout << "Dog copy assignment operator called" << std::endl;
 	if (this != &other) {
 		type_ = other.type_;
-		brain_ = other.brain_;
+		delete brain_;
+		brain_ = new Brain(*other.brain_);
 	}
 	return *this;
 }
