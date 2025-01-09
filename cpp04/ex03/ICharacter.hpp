@@ -6,12 +6,14 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:40:21 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 15:08:44 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:24:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ICHARACTER_HPP
 #define ICHARACTER_HPP
+
+#include <string>
 
 class AMateria;
 
