@@ -1,13 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IMateriaSource.cpp                                 :+:      :+:    :+:   */
+/*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 11:43:52 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 11:43:59 by pmarkaid         ###   ########.fr       */
+/*   Created: 2025/01/09 11:54:39 by pmarkaid          #+#    #+#             */
+/*   Updated: 2025/01/09 11:54:56 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "IMateriaSource.hpp"
+#include "AMateria.hpp"
+#include "Cure.hpp"
