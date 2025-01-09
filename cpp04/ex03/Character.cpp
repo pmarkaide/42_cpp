@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:52:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 20:17:21 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:34:55 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ Character::Character() : name_(""), count_(0)
 {
 	for (int i = 0; i < 4; i++)
 		materia_[i] = nullptr;
+	std::cout << "Character default constructor called" << std::endl;
 }
 
 Character::Character(const std::string& name) : name_(name), count_(0)
 {
 	for (int i = 0; i < 4; i++)
 		materia_[i] = nullptr;
+	std::cout << "Character constructor called" << std::endl;
 }
 
 Character::Character(const Character& other) : name_(other.name_), count_(other.count_)
@@ -33,7 +35,9 @@ Character::Character(const Character& other) : name_(other.name_), count_(other.
 		else
 			materia_[i] = nullptr;
 	}
+	std::cout << "Character copy constructor called" << std::endl;
 }
+
 
 Character& Character::operator=(const Character& other)
 {
@@ -50,6 +54,7 @@ Character& Character::operator=(const Character& other)
 		else
 			materia_[i] = nullptr;
 	}
+	std::cout << "Character copy assignment operator called" << std::endl;
 	return *this;
 }
 
@@ -60,6 +65,7 @@ Character::~Character()
 		if (materia_[i])
 			delete materia_[i];
 	}
+	std::cout << "Character destructor called" << std::endl;
 }
 
 std::string const & Character::getName() const{

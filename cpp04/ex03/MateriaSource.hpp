@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:34 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 15:29:59 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:37:32 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define MATERIASOURCE_HPP
 
 #include "IMateriaSource.hpp"
-
+#include "AMateria.hpp"
 class MateriaSource: public IMateriaSource{
 	private:
 		AMateria* materia_[4];

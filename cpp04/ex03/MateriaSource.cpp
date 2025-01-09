@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 15:31:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/09 20:31:40 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 MateriaSource::MateriaSource(): count(0) {
 	for (int i = 0; i < 4; i++)
 		materia_[i] = nullptr;
+	std::cout << "MateriaSource constructor called" << std::endl;
 }
 
 void MateriaSource::learnMateria(AMateria* newMateria){
@@ -35,4 +36,5 @@ AMateria* MateriaSource::createMateria(std::string const & type){
 MateriaSource::~MateriaSource() {
 	for (int i = 0; i < count; i++)
 		delete materia_[i];
+	std::cout << "MateriaSource destructor called" << std::endl;
 }
