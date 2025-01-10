@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/10 09:12:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:14:53 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,11 @@
 
 // STATIC FUNCTIONS
 
-static void displayWelcomeMessage() {
-    std::cout << "Connecting to the server..." << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << "Connection established!" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << "\n====================================" << std::endl;
-    std::cout << "   Welcome aboard the PhoneBook!" << std::endl;
-    std::cout << "   Your data is safe... probably." << std::endl;
-    std::cout << "   Remember: Trust no toaster!" << std::endl;
-    std::cout << "   Stay sharp. The Cylons could be" << std::endl;
-    std::cout << "   anywhere, even in your contacts." << std::endl;
-    std::cout << "====================================\n" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(4));
-    std::cout << "\nRedirecting to the console...\n" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-}
-
 static void displayMenu() {
-    std::cout << "Please choose among the options:" << std::endl;
-    std::cout << "ADD: Add a Contact" << std::endl;
-    std::cout << "SEARCH: Get details of a Contact" << std::endl;
-    std::cout << "EXIT: Exit the program\n" << std::endl;
+    std::cout << "Please choose among the options:\n" << std::endl;
+    std::cout << "  ADD:		Add a Contact" << std::endl;
+    std::cout << "  SEARCH:	Get details of a Contact" << std::endl;
+    std::cout << "  EXIT:		Exit the program\n" << std::endl;
     std::cout << "Option: ";
 }
 
@@ -64,6 +47,38 @@ static void displayBanner(bool menu){
     )" << std::endl;
     if(menu)
         displayMenu();
+}
+
+static void displayWelcomeMessage() {
+    std::cout << "Connecting to the server..." << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "Connection established!" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::cout << "\n====================================" << std::endl;
+    std::cout << "   Welcome aboard the PhoneBook!" << std::endl;
+    std::cout << "   Your data is safe... probably." << std::endl;
+    std::cout << "   Remember: Trust no toaster!" << std::endl;
+    std::cout << "   Stay sharp. The Cylons could be" << std::endl;
+    std::cout << "   anywhere, even in your contacts." << std::endl;
+    std::cout << "====================================\n" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(4));
+    std::cout << "\nRedirecting to the console...\n" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	std::cout << "\nType CONNECT to continue\n";
+
+	std::string input;
+    while (true) {
+        std::getline(std::cin, input);
+        if(input != "CONNECT"){
+            std::cout << "\nType CONNECT to continue\n";
+            continue;
+        }
+        if(input == "CONNECT"){
+            displayBanner(true);
+            break;
+        }
+    }
 }
 
 static std::string evaluate_input(const std::string& prompt) {
@@ -100,26 +115,41 @@ static std::string truncateString(const std::string& str) {
 static int getValidNumber(int nbContacts_) {
     std::string input;
 
-    while (true) {
-        std::cin >> input;
+	int contatcs = nbContacts_;
+	if (nbContacts_ > 8)
+		contatcs = 8;
+	while (true) {
+		std::getline(std::cin, input);
+		if(input.empty()){
+			std::cout << "Input cannot be empty. Please try again\n";
+			std::cout << "Index: ";
+			continue;
+		}
+		if (input.length() > 1) {
+			std::cout << "\nInvalid input\nPlease enter a single digit between 1 and "  << contatcs << std::endl;
+			std::cout << "Index: ";
+			continue;
+		}
         if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
             int number = input[0] - '0';
             if(number <= nbContacts_)
-                return number;
+				return number;
         }
-        std::cout << "\nInvalid input\nPlease enter a single digit between 1 and " << nbContacts_ << std::endl;
+        std::cout << "\nInvalid input\nPlease enter a single digit between 1 and " << contatcs << std::endl;
         std::cout << "Index: ";
     }
 }
 
 static void displayContact(Contact contact){
-    std::string input;
     std::cout << "\nFirst name: " <<  contact.getFirstName() << std::endl;
     std::cout << "Last name: " <<  contact.getLastName() << std::endl;
     std::cout << "Nick name: " <<  contact.getNickname() << std::endl;
     std::cout << "Phone number: " <<  contact.getPhoneNumber() << std::endl;
     std::cout << "Darkest secret: " <<  contact.getDarkestSecret() << std::endl;
 
+	std::cout << "\nType BACK to continue\n";
+
+	std::string input;
     while (true) {
         std::getline(std::cin, input);
         if(input != "BACK"){
@@ -177,7 +207,7 @@ void  PhoneBook::addContact(){
     newContact.setDarkestSecret(evaluate_input("Darkest Secret: "));
     contacts[nbContacts_ % MAX_CONTACTS] = newContact;
     nbContacts_++;
-    std::cout << "\nMember " << newContact.getNickname() << " added succesfully" << std::endl;
+	std::cout << "\nMember " << newContact.getNickname() << " added succesfully" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << "\nReturning to the menu..." << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
