@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:46:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 16:13:05 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:31:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main()
 
 	// Print the address
 	std::cout << "\nString: " << &brain << std::endl;
-	std::cout << "Pointer: " << &stringPTR << std::endl;
+	std::cout << "Pointer: " << stringPTR << std::endl;
 	std::cout << "Reference: " << &stringREF << std::endl;
 
 	// Print the value
