@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:32:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 15:10:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/10 10:12:46 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,5 @@ class Zombie {
 		void announce(void);
 		void	setName(const std::string& zombieNamme);
 };
-
-Zombie* zombieHorde( int N, std::string name );
 
 #endif  // ZOMBIE_HPP
