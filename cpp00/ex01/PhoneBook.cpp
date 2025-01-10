@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/04 22:37:38 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:12:11 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,22 @@ static std::string evaluate_input(const std::string& prompt) {
     while (true) {
         std::cout << prompt;
         std::cin.clear();
-        if (std::getline(std::cin, input)) {
-            if (!input.empty()) {
-                return input;
-            }
-            std::cout << "Input cannot be empty. Please try again\n";
-        } else {
-            if (std::cin.eof()) {
+        if (!std::getline(std::cin, input)) {
+             if (std::cin.eof()) {
                 std::cin.clear();
-                std::cout << "\n\nEOF found! Exiting program..." << std::endl;
-                exit(0);
+                clearerr(stdin);
+                std::cout << "\nCtrl-D detected. Please provide input: ";
+                continue;
             }
+            std::cin.clear();
             std::cout << "Input error occurred. Please try again\n";
+            continue;
         }
+        if (input.empty()) {
+            std::cout << "Input cannot be empty. Please try again\n";
+            continue;
+        }
+        return input;
     }
 }
 
