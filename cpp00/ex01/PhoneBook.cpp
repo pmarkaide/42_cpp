@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:43:18 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/10 12:14:53 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/13 09:37:59 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,18 @@ static std::string evaluate_input(const std::string& prompt) {
     while (true) {
         std::cout << prompt;
         std::cin.clear();
-        if (!std::getline(std::cin, input)) {
-             if (std::cin.eof()) {
-                std::cin.clear();
-                clearerr(stdin);
-                std::cout << "\nCtrl-D detected. Please provide input: ";
-                continue;
+        if (std::getline(std::cin, input)) {
+            if (!input.empty() && input.find_first_not_of(" \t\n\r\f\v") != std::string::npos) {
+                return input;
             }
-            std::cin.clear();
-            std::cout << "Input error occurred. Please try again\n";
-            continue;
+            std::cout << "Input cannot be empty or only whitespace. Please try again\n";
+        } else {
+            if (std::cin.eof()) {
+                std::cin.clear();
+                std::cout << "\n\nEOF found! Exiting program..." << std::endl;
+                exit(0);
+            }
         }
-        if (input.empty()) {
-            std::cout << "Input cannot be empty. Please try again\n";
-            continue;
-        }
-        return input;
     }
 }
 
@@ -112,30 +108,30 @@ static std::string truncateString(const std::string& str) {
     return str;
 }
 
-static int getValidNumber(int nbContacts_) {
+static int getValidIndex(int nbContacts_) {
     std::string input;
 
-	int contatcs = nbContacts_;
-	if (nbContacts_ > 8)
-		contatcs = 8;
-	while (true) {
-		std::getline(std::cin, input);
-		if(input.empty()){
-			std::cout << "Input cannot be empty. Please try again\n";
-			std::cout << "Index: ";
-			continue;
-		}
-		if (input.length() > 1) {
-			std::cout << "\nInvalid input\nPlease enter a single digit between 1 and "  << contatcs << std::endl;
-			std::cout << "Index: ";
-			continue;
-		}
+    int maxIndex = std::min(nbContacts_, 8);
+
+    while (true) {
+        std::getline(std::cin, input);
+        if (std::cin.eof()) {
+            std::cin.clear();
+            std::cout << "\n\nEOF found! Exiting program..." << std::endl;
+            exit(0);
+        }
+        if (input.empty() || input.find_first_not_of(" \t\n\r\f\v") == std::string::npos) {
+            std::cout << "Input cannot be empty. Please try again\n";
+            std::cout << "Index: ";
+            continue;
+        }
         if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
             int number = input[0] - '0';
-            if(number <= nbContacts_)
-				return number;
+            if (number <= maxIndex) {
+                return number;
+            }
         }
-        std::cout << "\nInvalid input\nPlease enter a single digit between 1 and " << contatcs << std::endl;
+        std::cout << "\nInvalid input\nPlease enter a single digit between 1 and " << maxIndex << std::endl;
         std::cout << "Index: ";
     }
 }
@@ -251,7 +247,7 @@ void  PhoneBook::searchContact(){
     std::cout << "|------------------------------------------------------|" << std::endl;
     std::cout << "\nType a Index number to get details of a contact" << std::endl;
     std::cout << "Index: ";
-    int contact = getValidNumber(nbContacts_) - 1 ;
+    int contact = getValidIndex(nbContacts_) - 1 ;
     displayContact(contacts[contact]);
 }
 
