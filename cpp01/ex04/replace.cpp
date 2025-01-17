@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:26:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/06 17:11:30 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/17 08:30:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void write_file(const std::string& filename, const std::string& content) {
 
 void replace(const std::string& infile, const std::string& s1, const std::string& s2)
 {
+	if(s1.empty() || s2.empty()){
+		std::cerr << "None of the strings can be empty!" << std::endl;
+		return;
+	}
+	
 	std::string fileContents;
 
 	try {
