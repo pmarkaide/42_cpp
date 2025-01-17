@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 14:32:59 by pmarkaid          #+#    #+#             */
-/*   Updated: 2024/12/05 15:12:56 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:13:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # include <iostream>
 
 // Default constructor
-Zombie::Zombie() {};
+Zombie::Zombie() {
+	std::cout << "A Zombie has been created.\n";
+};
 
 // Destructor
 Zombie::~Zombie(){
