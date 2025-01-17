@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:26:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/17 08:30:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:23:38 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void replace(const std::string& infile, const std::string& s1, const std::string
 		std::cerr << "None of the strings can be empty!" << std::endl;
 		return;
 	}
-	
+
 	std::string fileContents;
 
 	try {
@@ -79,16 +79,14 @@ void replace(const std::string& infile, const std::string& s1, const std::string
 		std::cerr << "Error: " << e.what() << std::endl;
 		return; 
 	}
-	
-	size_t pos = 0;
-	std::string modifiedContents;
 
-	while ((pos = fileContents.find(s1, pos)) != std::string::npos) {
-		modifiedContents += fileContents.substr(0, pos);
-		modifiedContents += s2;
-		pos += s1.length();
-		fileContents = fileContents.substr(pos);
+	size_t pos = 0;
+
+	while((pos = fileContents.find(s1)) != fileContents.npos ){
+		fileContents.erase(pos, s1.length());
+		fileContents.insert(pos, s2);		
+		pos += fileContents.find(s1);	
 	}
-	modifiedContents += fileContents;
-	write_file(infile + ".replace", modifiedContents);
+	
+	write_file(infile + ".replace", fileContents);
 }
