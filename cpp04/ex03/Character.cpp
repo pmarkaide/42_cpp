@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:52:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/24 13:14:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:16:25 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ Character::~Character()
 	std::cout << "Character destructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-		std::cout << "going to CRASH" << std::endl;
-		
 		if (materia_[i] && !materia_[i]->getFloor()){
 			delete materia_[i];
 			materia_[i] = nullptr;

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 20:31:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:24:59 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ MateriaSource::MateriaSource(): count(0) {
 void MateriaSource::learnMateria(AMateria* newMateria){
 	
 	if (!newMateria || count >= 4)
+	{
+		std::cout << "MateriaSource is full or materia is null" << std::endl;
 		return;
+	}
 	materia_[count++] = newMateria;
 };
 
@@ -30,6 +33,7 @@ AMateria* MateriaSource::createMateria(std::string const & type){
 		if (materia_[i]->getType() == type)
 			return materia_[i]->clone();
 	}
+	std::cout << "Materia not learn yet!" << std::endl;
 	return 0;
 };
 

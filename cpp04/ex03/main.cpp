@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:30:58 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/24 13:07:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:21:37 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ int main()
 		me->unequip(2);
 		std::cout << std::endl;
 
-		// me->equip(m1);
-		// me->equip(m);
-		// me->equip(m);
-		// me->equip(m);
+		AMateria* m4;
+		m4 = src->createMateria("fire");
 		std::cout << std::endl;
 		
 		delete bob;
