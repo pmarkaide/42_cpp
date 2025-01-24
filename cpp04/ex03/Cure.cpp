@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:54:39 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 20:39:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:14:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ Cure::Cure(): AMateria("cure"){
 }
 
 Cure::Cure(const Cure& other): AMateria(other.getType()) {
+	owned_ = other.owned_;
+    inFloor_ = other.inFloor_;
 	std::cout << "Cure copy constructor called" << std::endl;
 }
 

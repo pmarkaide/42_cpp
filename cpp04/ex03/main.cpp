@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:30:58 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/24 09:11:56 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:07:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,40 @@ int main()
 		
 		ICharacter* me = new Character("me");
 		std::cout << std::endl;
-		AMateria* tmp;
-		tmp = src->createMateria("ice");
-		me->equip(tmp);
+		
+		AMateria* m1;
+		AMateria* m2;
+		m1 = src->createMateria("ice");
+		me->equip(m1);
 		std::cout << std::endl;
-		tmp = src->createMateria("cure");
-		me->equip(tmp);
+		
+		m2 = src->createMateria("cure");
+		me->equip(m2);
 		std::cout << std::endl;
 
 		ICharacter* bob = new Character("bob");
+		std::cout << std::endl;
+		
 		me->use(0, *bob);
 		me->use(1, *bob);
-
-		tmp = src->createMateria("ice");
-		me->equip(tmp);
+		std::cout << std::endl;
+		
+		bob->equip(m2);
+		std::cout << std::endl;
+		
+		AMateria* m3;
+		m3 = src->createMateria("ice");
+		me->equip(m3);
+		std::cout << std::endl;
+		
 		me->unequip(2);
+		std::cout << std::endl;
+
+		// me->equip(m1);
+		// me->equip(m);
+		// me->equip(m);
+		// me->equip(m);
+		std::cout << std::endl;
 		
 		delete bob;
 		delete me;

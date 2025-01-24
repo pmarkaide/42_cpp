@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:53:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 15:39:24 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:14:17 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ Ice::Ice(): AMateria("ice"){
 }
 
 Ice::Ice(const Ice& other): AMateria(other.getType()) {
+	owned_ = other.owned_;
+    inFloor_ = other.inFloor_;
 	std::cout << "Ice copy constructor called" << std::endl;
 }
 
