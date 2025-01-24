@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:52:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/01/09 20:34:55 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/01/24 09:10:44 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void Character::equip(AMateria* materia)
 {
 	if (count_ < 4 && materia)
 	{
+		std::cout << "Adding " + materia->getType() + " to Inventory" << std::endl;
 		for (int i = 0; i < 4; i++)
 		{
 			if (!materia_[i])
@@ -86,12 +87,15 @@ void Character::equip(AMateria* materia)
 			}
 		}
 	}
+	else
+		std::cout << "Inventory is full. Unequip something to add a new Materia" << std::endl;
 }
 
 void Character::unequip(int idx)
 {
 	if (idx >= 0 && idx < 4 && materia_[idx])
 	{
+		std::cout << "Throwing " + materia_[idx]->getType() + " to the floor" << std::endl;
 		materia_[idx] = nullptr;
 		count_--;
 	}
