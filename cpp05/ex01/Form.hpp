@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 13:13:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:55:55 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
  #define FORM_HPP
 
 # include <iostream>
+# include "Bureaucrat.hpp"
 
+class Bureaucrat;
 
 class Form {
 	private:
@@ -31,6 +33,7 @@ class Form {
 		int getSignGrade() const;
 		int getExecGrade() const;
 		bool isSigned() const;
+		void beSigned(const Bureaucrat &b);
 		
 		class GradeTooHighException : public std::exception
 		{
@@ -38,6 +41,11 @@ class Form {
 				const char* what() const noexcept;
 		};
 		class GradeTooLowException : public std::exception
+		{
+			public:
+				const char* what() const noexcept;
+		};
+		class GradeIsNegativeException : public std::exception
 		{
 			public:
 				const char* what() const noexcept;

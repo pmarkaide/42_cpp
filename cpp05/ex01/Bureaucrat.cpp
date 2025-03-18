@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:03 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 11:28:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:53:19 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ void Bureaucrat::decreaseGrade(int amount){
 }
 
 
+void Bureaucrat::signForm(Form &f){
+	try{
+		f.beSigned(*this);
+		std::cout << getName() << " signs " << f.getName() << std::endl;
+	}
+	catch (std::exception & e){
+		std::cout << getName() << " cannot sign " << f.getName() << " because " << e.what() << std::endl;
+	}
+}
+
 std::string Bureaucrat::getName() const{
 	return(name_);
 }
@@ -47,15 +57,15 @@ int Bureaucrat::getGrade() const{
 }
 
 const char* Bureaucrat::GradeIsNegative::what() const noexcept {
-	return "Grade must be a positive number.";
+	return "Bureaucrat Grade must be a positive number.";
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const noexcept {
-	return "Grade is too high! Valid grades are 1-150.";
+	return "Bureaucrat Grade is too high! Valid grades are 1-150.";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const noexcept {
-	return "Grade is too low! Valid grades are 1-150.";
+	return "Bureaucrat Grade is too low! Valid grades are 1-150.";
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {

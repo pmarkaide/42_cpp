@@ -6,27 +6,26 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 13:22:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:01:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Form.hpp"
 
-Form::Form(const std::string name, int signGrade, int execGrade)
-: name_(name), signGrade_(signGrade), execGrade_(execGrade){
+Form::Form(const std::string name, int signGrade, int execGrade): name_(name), signGrade_(signGrade), execGrade_(execGrade){
+	if(signGrade < 0 || execGrade < 0)
+		throw GradeIsNegativeException();
 	if(signGrade > 150 || execGrade > 150)
 		throw GradeTooLowException();
 	if(signGrade < 1 || execGrade < 1)
 		throw GradeTooHighException();
-	std::string sign = "NO";
-	if(isSigned())
-		sign = "YES";
-
-	std::cout << "Form: " << getName()
-	<< "\nSign Grade: " << getSignGrade()
-	<< "\nExec Grade: " << getExecGrade()
-	<<"\nSigned: " << sign << std::endl;
 };
+
+void Form::beSigned(const Bureaucrat &b){
+	if(b.getGrade() > getSignGrade())
+		throw GradeTooLowException();
+	signed_ = true;
+}
 
 std::string Form::getName() const{
 	return(name_);
@@ -45,11 +44,15 @@ bool Form::isSigned() const{
 }
 
 const char* Form::GradeTooHighException::what() const noexcept {
-	return "Grade is too high! Valid grades are 1-150.";
+	return "Form Grade is too high! Valid grades are 1-150.";
 }
 
 const char* Form::GradeTooLowException::what() const noexcept {
-	return "Grade is too low! Valid grades are 1-150.";
+	return "Form Grade is too low! Valid grades are 1-150.";
+}
+
+const char* Form::GradeIsNegativeException::what() const noexcept {	return "Grade must be a positive number.";
+	return "Form Grade must be a positive number.";
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& f) {
