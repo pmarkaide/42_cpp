@@ -6,22 +6,23 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 10:04:37 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/03/18 09:17:17 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/03/18 13:18:40 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bureaucrat
+NAME = form
 
 SRCS = 					\
 		main.cpp 		\
-		Bureaucrat.cpp
+		Bureaucrat.cpp  \
+		Form.cpp
 
 
 
 OBJS = $(SRCS:.cpp=.o)
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11
+CFLAGS = -Wall -Wextra -Werror -std=c++11 -g
 SANITIZE_FLAGS = -fsanitize=address,undefined -g
 RM = rm -f
 
