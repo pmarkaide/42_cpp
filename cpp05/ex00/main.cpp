@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 10:37:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:49:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(){
 
 	Bureaucrat bert;
 	Bureaucrat bob("Bob", 100);
+	std::cout << bob.getName()  << " has a grad of: " << bob.getGrade() << std::endl;
 
 	try
 	{
@@ -23,7 +24,7 @@ int main(){
 	}
 	catch (std::exception & e)
 	{
-		std::cout << (e.what()) << std::endl;
+		std::cout << "Error: " << e.what() << std::endl;
 	}
 
 	

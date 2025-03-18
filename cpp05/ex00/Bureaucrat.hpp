@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:00 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 10:24:35 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:44:51 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ class Bureaucrat {
 		~Bureaucrat() = default;
 		Bureaucrat(const Bureaucrat& other) = delete;
 		Bureaucrat& operator=(const Bureaucrat& other) = delete;
-		//std::string getName();
-		//int getGrade();
-		// increaseGrade(int amount)
-		// decreaseGrade(int amount)
+		std::string getName();
+		int getGrade();
+		void increaseGrade(int amount);
+		void decreaseGrade(int amount);
 		class GradeTooHighException : public std::exception
 		{
 			public:
