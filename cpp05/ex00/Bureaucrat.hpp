@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:00 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 10:44:51 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:27:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ class Bureaucrat {
 		~Bureaucrat() = default;
 		Bureaucrat(const Bureaucrat& other) = delete;
 		Bureaucrat& operator=(const Bureaucrat& other) = delete;
-		std::string getName();
-		int getGrade();
+		std::string getName() const;
+		int getGrade() const;
 		void increaseGrade(int amount);
 		void decreaseGrade(int amount);
 		class GradeTooHighException : public std::exception
@@ -41,6 +41,13 @@ class Bureaucrat {
 			public:
 				const char* what() const noexcept;
 		};
+		class GradeIsNegative : public std::exception
+		{
+			public:
+				const char* what() const noexcept;
+		};
 };
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
 
 #endif // BUREAUCRAT_HPP
