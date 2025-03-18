@@ -6,11 +6,15 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:03 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 11:28:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:12:23 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Bureaucrat.hpp"
+
+Bureaucrat::Bureaucrat(){
+	std::cout << "New bureaucrat hired..." << std::endl;
+}
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : name_(name){
 	if(grade > 150)
@@ -20,6 +24,20 @@ Bureaucrat::Bureaucrat(const std::string name, int grade) : name_(name){
 	grade_ = grade;
 	std::cout << name_ << ", bureaucrat grade " << grade_ << std::endl;
 };
+
+Bureaucrat::~Bureaucrat(){
+	std::cout << "Bureaucrat " << name_ << " has been fired." << std::endl;
+}
+
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : name_(other.name_), grade_(other.grade_) {
+	std::cout << "Copy constructor called for " << name_ << std::endl;
+}
+
+Bureaucrat &Bureaucrat::operator=( const Bureaucrat& other ){
+	if (this != &other)
+		this->grade_ = other.getGrade();
+	return (*this);
+}
 
 void Bureaucrat::increaseGrade(int amount){
 	if(amount < 0)

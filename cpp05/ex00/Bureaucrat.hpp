@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:00 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 11:27:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:08:55 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ class Bureaucrat {
 		int grade_ = 150;
 
 	public:
-		Bureaucrat() = default;
+		Bureaucrat();
 		Bureaucrat(const std::string name, int grade);
-		~Bureaucrat() = default;
-		Bureaucrat(const Bureaucrat& other) = delete;
-		Bureaucrat& operator=(const Bureaucrat& other) = delete;
+		~Bureaucrat();
+		Bureaucrat(const Bureaucrat& other);
+		Bureaucrat& operator=(const Bureaucrat& other);
 		std::string getName() const;
 		int getGrade() const;
 		void increaseGrade(int amount);
