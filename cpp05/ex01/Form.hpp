@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 13:55:55 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:09:45 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ class Form {
 				const char* what() const noexcept;
 		};
 		class GradeIsNegativeException : public std::exception
+		{
+			public:
+				const char* what() const noexcept;
+		};
+		class FormAlreadySignedException : public std::exception
 		{
 			public:
 				const char* what() const noexcept;

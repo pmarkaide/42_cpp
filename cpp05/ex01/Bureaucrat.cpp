@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:03 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 13:53:19 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:06:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Bureaucrat::Bureaucrat(const std::string name, int grade) : name_(name){
 	if(grade < 1)
 		throw GradeTooHighException();
 	grade_ = grade;
-	std::cout << name_ << ", bureaucrat grade " << grade_ << std::endl;
+	std::cout << "New bureaucrat hired..." << std::endl;
 };
 
 void Bureaucrat::increaseGrade(int amount){

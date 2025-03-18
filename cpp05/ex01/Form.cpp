@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 14:01:49 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:17:08 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ Form::Form(const std::string name, int signGrade, int execGrade): name_(name), s
 };
 
 void Form::beSigned(const Bureaucrat &b){
+	if(signed_)
+		throw FormAlreadySignedException();
 	if(b.getGrade() > getSignGrade())
 		throw GradeTooLowException();
 	signed_ = true;
@@ -51,8 +53,12 @@ const char* Form::GradeTooLowException::what() const noexcept {
 	return "Form Grade is too low! Valid grades are 1-150.";
 }
 
-const char* Form::GradeIsNegativeException::what() const noexcept {	return "Grade must be a positive number.";
+const char* Form::GradeIsNegativeException::what() const noexcept {
 	return "Form Grade must be a positive number.";
+}
+
+const char* Form::FormAlreadySignedException::what() const noexcept {
+	return "Form cannot be signed twice.";
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& f) {
