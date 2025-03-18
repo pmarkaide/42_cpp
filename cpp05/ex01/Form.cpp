@@ -6,11 +6,15 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 14:17:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:19:50 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "Form.hpp"
+
+Form::Form(){
+	std::cout << "New form created..." << std::endl;
+}
 
 Form::Form(const std::string name, int signGrade, int execGrade): name_(name), signGrade_(signGrade), execGrade_(execGrade){
 	if(signGrade < 0 || execGrade < 0)
@@ -27,6 +31,20 @@ void Form::beSigned(const Bureaucrat &b){
 	if(b.getGrade() > getSignGrade())
 		throw GradeTooLowException();
 	signed_ = true;
+}
+
+Form::Form(const Form& other) : name_(other.name_), signed_(other.signed_), signGrade_(other.signGrade_), execGrade_(other.execGrade_) {
+	std::cout << "Copy constructor called for " << name_ << std::endl;
+}
+
+Form &Form::operator=(const Form& other){
+	if(this != &other)
+		this->signed_ = other.isSigned();
+	return (*this);
+}
+
+Form::~Form(){
+	std::cout << "Form destroyed..." << std::endl;
 }
 
 std::string Form::getName() const{

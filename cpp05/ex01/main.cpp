@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 14:19:39 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:20:43 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int main(){
 		lowRanking.increaseGrade(100);
 		std::cout << lowRanking << std::endl;
 		lowRanking.signForm(secretForm);
+		std::cout << std::endl;
         
     } catch (std::exception &e) {
         std::cout << "Unexpected exception: " << e.what() << std::endl;

@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/18 14:09:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:15:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ class Form {
 		const int execGrade_ = 75;
 		
 	public:
-		Form() = default;
+		Form();
 		Form(std::string name, int signGrade, int execGrade);
-		~Form() = default;
+		~Form();
+		Form(const Form& other);
+		Form& operator=(const Form& other);
 		std::string getName() const;
 		int getSignGrade() const;
 		int getExecGrade() const;
