@@ -1,0 +1,11 @@
+# Ignore all files without extension
+*
+!/**/
+!*.*
+
+# Except these
+!Makefile
+
+# Ignore these
+*.o
+*.code-workspace
