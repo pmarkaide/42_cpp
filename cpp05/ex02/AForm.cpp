@@ -6,17 +6,17 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/21 14:43:01 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:59:56 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "AForm.hpp"
 
-Form::Form(){
+AForm::AForm(){
 	std::cout << "New form created..." << std::endl;
 }
 
-Form::Form(const std::string name, int signGrade, int execGrade): name_(name), signGrade_(signGrade), execGrade_(execGrade){
+AForm::AForm(const std::string name, int signGrade, int execGrade): name_(name), signGrade_(signGrade), execGrade_(execGrade){
 	if(signGrade < 0 || execGrade < 0)
 		throw GradeIsNegativeException();
 	if(signGrade > 150 || execGrade > 150)
@@ -25,7 +25,7 @@ Form::Form(const std::string name, int signGrade, int execGrade): name_(name), s
 		throw GradeTooHighException();
 };
 
-void Form::beSigned(const Bureaucrat &b){
+void AForm::beSigned(const Bureaucrat &b){
 	if(signed_)
 		throw FormAlreadySignedException();
 	if(b.getGrade() > getSignGrade())
@@ -33,53 +33,53 @@ void Form::beSigned(const Bureaucrat &b){
 	signed_ = true;
 }
 
-Form::Form(const Form& other) : name_(other.name_), signed_(other.signed_), signGrade_(other.signGrade_), execGrade_(other.execGrade_) {
+AForm::AForm(const AForm& other) : name_(other.name_), signed_(other.signed_), signGrade_(other.signGrade_), execGrade_(other.execGrade_) {
 	std::cout << "Copy constructor called for " << name_ << std::endl;
 }
 
-Form &Form::operator=(const Form& other){
+AForm &AForm::operator=(const AForm& other){
 	if(this != &other)
 		this->signed_ = other.isSigned();
 	return (*this);
 }
 
-Form::~Form(){
+AForm::~AForm(){
 	std::cout << "Form destroyed..." << std::endl;
 }
 
-std::string Form::getName() const{
+std::string AForm::getName() const{
 	return(name_);
 }
 
-int Form::getSignGrade() const{
+int AForm::getSignGrade() const{
 	return(signGrade_);
 }
 
-int Form::getExecGrade() const{
+int AForm::getExecGrade() const{
 	return(execGrade_);
 }
 
-bool Form::isSigned() const{
+bool AForm::isSigned() const{
 	return(signed_);
 }
 
-const char* Form::GradeTooHighException::what() const noexcept {
+const char* AForm::GradeTooHighException::what() const noexcept {
 	return "Form Grade is too high! Valid grades are 1-150.";
 }
 
-const char* Form::GradeTooLowException::what() const noexcept {
+const char* AForm::GradeTooLowException::what() const noexcept {
 	return "Form Grade is too low! Valid grades are 1-150.";
 }
 
-const char* Form::GradeIsNegativeException::what() const noexcept {
+const char* AForm::GradeIsNegativeException::what() const noexcept {
 	return "Form Grade must be a positive number.";
 }
 
-const char* Form::FormAlreadySignedException::what() const noexcept {
+const char* AForm::FormAlreadySignedException::what() const noexcept {
 	return "Form cannot be signed twice.";
 }
 
-std::ostream& operator<<(std::ostream& os, const Form& f) {
+std::ostream& operator<<(std::ostream& os, const AForm& f) {
 	std::string sign = "NO";
 	if(f.isSigned())
 		sign = "YES";
