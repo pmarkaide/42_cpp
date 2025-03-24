@@ -6,13 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/21 15:59:56 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:30:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "AForm.hpp"
 
-AForm::AForm(){
+AForm::AForm(): name_("Blank Form"), signGrade_(150), execGrade_(150){
 	std::cout << "New form created..." << std::endl;
 }
 
@@ -23,6 +23,7 @@ AForm::AForm(const std::string name, int signGrade, int execGrade): name_(name),
 		throw GradeTooLowException();
 	if(signGrade < 1 || execGrade < 1)
 		throw GradeTooHighException();
+	std::cout << "New form created..." << std::endl;
 };
 
 void AForm::beSigned(const Bureaucrat &b){
@@ -31,6 +32,7 @@ void AForm::beSigned(const Bureaucrat &b){
 	if(b.getGrade() > getSignGrade())
 		throw GradeTooLowException();
 	signed_ = true;
+	std::cout << "Form " << getName() << " is signed by " << b.getName() << std::endl;
 }
 
 AForm::AForm(const AForm& other) : name_(other.name_), signed_(other.signed_), signGrade_(other.signGrade_), execGrade_(other.execGrade_) {
@@ -79,13 +81,14 @@ const char* AForm::FormAlreadySignedException::what() const noexcept {
 	return "Form cannot be signed twice.";
 }
 
+const char* AForm::FormNotSignedException::what() const noexcept {
+	return "Form cannot be executed without a valid signature.";
+}
+
 std::ostream& operator<<(std::ostream& os, const AForm& f) {
-	std::string sign = "NO";
-	if(f.isSigned())
-		sign = "YES";
 	os << "Form: " << f.getName()
 	<< "\nSign Grade: " << f.getSignGrade()
 	<< "\nExec Grade: " << f.getExecGrade()
-	<<"\nSigned: " << sign;
+	<<"\nSigned: " << (f.isSigned() ? "YES" : "NO");
 	return os;
 }
