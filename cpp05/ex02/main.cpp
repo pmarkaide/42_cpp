@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:46:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:58:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int main(){
         std::cout << "\n--- Test 1: Creating a valid form ---" << std::endl;
         PresidentialPardonForm Pardon("Biden");
 		std::cout << Pardon << "\n" <<std::endl;
-		Bureaucrat highRanking("Alice", 10);
+		Bureaucrat highRanking("Alice", 1);
 		std::cout << std::endl;
 		Pardon.beSigned(highRanking);
 		std::cout << std::endl;
-		Pardon.execute(highRanking);
+		highRanking.executeForm(Pardon);
 		std::cout << std::endl;
 		
         

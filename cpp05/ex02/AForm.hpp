@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:22:22 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:57:43 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ class AForm {
 		bool signed_ = false;
 		const int signGrade_;
 		const int execGrade_;
+
+	protected:
+		virtual void beExecuted(void) const = 0;
 		
 	public:
 		// OCF
@@ -42,8 +45,7 @@ class AForm {
 		// actions
 		void beSigned(const Bureaucrat &b);
 		void execute(const Bureaucrat &bureaucrat) const;
-		virtual void beExecuted(void) const = 0;
-		
+
 		class GradeTooHighException : public std::exception
 		{
 			public:
