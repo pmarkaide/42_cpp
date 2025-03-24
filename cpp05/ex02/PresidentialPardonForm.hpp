@@ -6,15 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:44:59 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 16:34:31 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:42:26 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AForm.hpp"
 
-class Bureaucrat;
-
-class PresidentialPardonForm{
+class PresidentialPardonForm: public AForm{
 	private:
 		std::string target_;
 
@@ -27,5 +25,5 @@ class PresidentialPardonForm{
 		PresidentialPardonForm &operator=(PresidentialPardonForm const &other);
 
 		// actions
-		void	executeForm(Bureaucrat const &bureaucrat) const;
+		void	beExecuted(void) const override;
 };

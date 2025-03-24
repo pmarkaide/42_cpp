@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 16:30:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:39:46 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,12 @@ std::ostream& operator<<(std::ostream& os, const AForm& f) {
 	<< "\nExec Grade: " << f.getExecGrade()
 	<<"\nSigned: " << (f.isSigned() ? "YES" : "NO");
 	return os;
+}
+
+void AForm::execute(const Bureaucrat &bureaucrat) const{
+	if(!isSigned())
+		throw FormNotSignedException();
+	if(bureaucrat.getGrade() > getExecGrade())
+		throw GradeTooLowException();
+	beExecuted();
 }

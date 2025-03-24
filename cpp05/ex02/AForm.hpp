@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 16:17:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:22:22 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ class AForm {
 
 		// actions
 		void beSigned(const Bureaucrat &b);
-		virtual void execute(const std::string &target) = 0;
+		void execute(const Bureaucrat &bureaucrat) const;
+		virtual void beExecuted(void) const = 0;
 		
 		class GradeTooHighException : public std::exception
 		{
