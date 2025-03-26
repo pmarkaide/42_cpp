@@ -6,11 +6,15 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:44:47 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/26 10:53:38 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:25:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ROBOTOMYREQUESTFORM_HPP
+ #define ROBOTOMYREQUESTFORM_HPP
+
 #include "AForm.hpp"
+#include <random>
 
 class RobotomyRequestForm: public AForm{
 	private:
@@ -27,3 +31,5 @@ class RobotomyRequestForm: public AForm{
 		// actions
 		void	beExecuted(void) const override;
 };
+
+#endif // ROBOTOMYREQUESTFORM_HPP

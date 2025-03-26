@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:44 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:39:46 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:10:35 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void AForm::beSigned(const Bureaucrat &b){
 	if(b.getGrade() > getSignGrade())
 		throw GradeTooLowException();
 	signed_ = true;
-	std::cout << "Form " << getName() << " is signed by " << b.getName() << std::endl;
 }
 
 AForm::AForm(const AForm& other) : name_(other.name_), signed_(other.signed_), signGrade_(other.signGrade_), execGrade_(other.execGrade_) {

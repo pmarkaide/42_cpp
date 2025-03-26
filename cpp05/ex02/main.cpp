@@ -6,12 +6,13 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/26 11:02:13 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:22:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PresidentialPardonForm.hpp"
 # include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
 
 int main(){
 
@@ -54,6 +55,14 @@ int main(){
 		highRanking.executeForm(Roboto);
 		std::cout << std::endl;
 
+		std::cout << "\n--- Test 5: Plan some shubbery ---" << std::endl;
+		ShrubberyCreationForm Shub("Home");
+		std::cout << Shub << "\n" <<std::endl;
+		std::cout << std::endl;
+		highRanking.signForm(Shub);
+		std::cout << std::endl;
+		highRanking.executeForm(Shub);
+		std::cout << std::endl;
 		
 
 		std::cout << "\n--- Cleanup ---" << std::endl;

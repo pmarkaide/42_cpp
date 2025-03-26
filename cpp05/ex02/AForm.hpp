@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:41:41 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:57:43 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:11:56 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ class AForm {
 		bool signed_ = false;
 		const int signGrade_;
 		const int execGrade_;
-
-	protected:
 		virtual void beExecuted(void) const = 0;
-		
+
 	public:
 		// OCF
 		AForm();
