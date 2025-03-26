@@ -6,11 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/26 08:26:55 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:02:13 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
 
 int main(){
 
@@ -34,6 +35,23 @@ int main(){
 		lowRanking.signForm(Pardon);
 		std::cout << std::endl;
 		lowRanking.executeForm(Pardon);
+		std::cout << std::endl;
+
+		std::cout << "\n--- Test 3: Execute unsigned form ---" << std::endl;
+		PresidentialPardonForm Pardon2("Obama");
+		std::cout << Pardon2 << "\n" <<std::endl;
+		Bureaucrat highRanking2("Alice", 1);
+		std::cout << std::endl;
+		highRanking2.executeForm(Pardon2);
+		std::cout << std::endl;
+
+		std::cout << "\n--- Test 4: Robotomize someone ---" << std::endl;
+		RobotomyRequestForm Roboto("Obama");
+		std::cout << Roboto << "\n" <<std::endl;
+		std::cout << std::endl;
+		highRanking.signForm(Roboto);
+		std::cout << std::endl;
+		highRanking.executeForm(Roboto);
 		std::cout << std::endl;
 
 		
