@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:49:54 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/26 20:49:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:54:11 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ const char* Intern::InvalidFormCreationException::what() const noexcept {
 }
 
 AForm* Intern::makeForm(std::string form, std::string target){
-	AForm	*(*formsFunc[])(std::string target) = {&makeShrubberyForm, &makeRobotomyForm, &makePresidentForm};
+	AForm	*(*formsFunc[])(std::string target) = {&makePresidentForm, &makeRobotomyForm, &makeShrubberyForm};
 
 	const std::string forms[3] = {"PresidentialPardonForm", "RobotomyRequestForm", "ShrubberyCreationForm"};
 
