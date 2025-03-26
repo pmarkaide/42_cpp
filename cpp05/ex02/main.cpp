@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:58:03 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 08:26:55 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,23 @@ int main(){
 		std::cout << Pardon << "\n" <<std::endl;
 		Bureaucrat highRanking("Alice", 1);
 		std::cout << std::endl;
-		Pardon.beSigned(highRanking);
+		highRanking.signForm(Pardon);
 		std::cout << std::endl;
 		highRanking.executeForm(Pardon);
 		std::cout << std::endl;
+
+		std::cout << "\n--- Test 2: Low level Bureocrat messing up---" << std::endl;
+		Bureaucrat lowRanking("Bob", 150);
+		std::cout << std::endl;
+		lowRanking.signForm(Pardon);
+		std::cout << std::endl;
+		lowRanking.executeForm(Pardon);
+		std::cout << std::endl;
+
+		
+
+		std::cout << "\n--- Cleanup ---" << std::endl;
+
 		
         
         
