@@ -6,13 +6,11 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:17:38 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/26 11:22:16 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:51:01 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "PresidentialPardonForm.hpp"
-# include "RobotomyRequestForm.hpp"
-# include "ShrubberyCreationForm.hpp"
+# include "Intern.hpp"
 
 int main(){
 
@@ -64,6 +62,26 @@ int main(){
 		highRanking.executeForm(Shub);
 		std::cout << std::endl;
 		
+		std::cout << "\n--- Test 6: Intern creates a valid form ---" << std::endl;
+		Intern intern;
+		std::cout << std::endl;
+		AForm *form = intern.makeForm("PresidentialPardonForm", "Trump");
+		if (form) {
+		    std::cout << *form << std::endl;
+			std::cout << std::endl;
+		    delete form;
+		}
+
+		std::cout << "\n--- Test 7 Intern handles invalid form request ---" << std::endl;
+		try{
+			AForm *invalidForm = intern.makeForm("InvalidFormName", "Trump");
+			if(!invalidForm)
+				std::cout << "Invalid form created" << std::endl;
+		} catch (std::exception &e) {
+			std::cout << "Exception caught: " << e.what() << std::endl;
+		}
+		
+
 
 		std::cout << "\n--- Cleanup ---" << std::endl;
 

@@ -6,7 +6,7 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/08 10:04:37 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/03/26 11:21:50 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/03/26 20:41:24 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS = 									\
 		AForm.cpp						\
 		PresidentialPardonForm.cpp		\
 		RobotomyRequestForm.cpp			\
-		ShrubberyCreationForm.cpp
+		ShrubberyCreationForm.cpp 		\
+		Intern.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)
