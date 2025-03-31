@@ -16,8 +16,10 @@
 
 #include <string>
 #include <iostream>
-#include <iomanip> //setprecision
-#include <cmath> //modf
+#include <iomanip> 		//setprecision
+#include <cmath> 		//modf
+#include <algorithm>	//transform
+#include <cctype>		//tolower
 
 class ScalarConverter{
 	private:

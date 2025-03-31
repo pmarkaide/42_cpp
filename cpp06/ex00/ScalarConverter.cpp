@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/31 14:29:25 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:40:31 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ enum class SpecialType {
 };
 
 SpecialType checkSpecialValue(const std::string& input) {
+	std::string lowerInput = input;
+	std::transform(lowerInput.begin(), lowerInput.end(), lowerInput.begin(),
+				[](unsigned char c){ return std::tolower(c); });
 
-	if (input == "nan" || input == "nanf") {
+	if (lowerInput == "nan" || lowerInput == "nanf") {
 		return SpecialType::NOT_A_NUMBER;
 	}
-	if (input == "+inf" || input == "inf" || input == "+inff" || input == "inff") {
+	if (lowerInput == "+inf" || lowerInput == "inf" || lowerInput == "+inff" || lowerInput == "inff") {
 		return SpecialType::INF_POS;
 	}
-	if (input == "-inf" || input == "-inff") {
+	if (lowerInput == "-inf" || lowerInput == "-inff") {
 		return SpecialType::INF_NEG;
 	}
 	return SpecialType::NOT_SPECIAL;
