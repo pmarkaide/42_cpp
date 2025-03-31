@@ -6,32 +6,57 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/31 13:36:06 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:11:12 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ScalarConverter.hpp"
 
-void print_char(const std::string &input){
-	std::cout << "char: " << input[0] << std::endl;
+void print_char(double value){
+	std::cout << "char: " << static_cast<char>(value) << std::endl;
 }
 
-void print_int(const std::string &input){
-	std::cout << "int: " << std::stoi(input) << std::endl;
+void print_int(double value){
+	std::cout << "int: " << static_cast<int>(value) << std::endl;
 }
 
-void print_float(const std::string &input){
-	std::cout << "float: " << std::stof(input) << std::endl;
+void print_float(double value){
+	// Check if the number has a fractional part
+	double intPart;
+	double fracPart = std::modf(value, &intPart);
+
+	if (fracPart == 0.0) {
+		std::cout << "float: " << value << ".0f" << std::endl;
+	} else {
+		std::cout << "float: " << value << "f" << std::endl;
+	}
 }
 
-void print_double(const std::string &input){
-	std::cout << "double: " << std::stod(input) << std::endl;
+void print_double(double value){
+
+	// Check if the number has a fractional part
+	double intPart;
+	double fracPart = std::modf(value, &intPart);
+
+	if (fracPart == 0.0) {
+		std::cout << "double: " << value << ".0" << std::endl;
+	} else {
+		std::cout << "double: " << value << std::endl;
+	}
 }
 
 void ScalarConverter::convert(const std::string &input){
 	
-	print_char(input);
-	print_int(input);
-	print_float(input);
-	print_double(input);	
+	try{
+		double value = std::stod(input);
+
+		print_char(value);
+		print_int(value);
+		print_float(value);
+		print_double(value);
+
+	}catch(std::exception &e){
+		std::cout << "double: impossible" << std::endl;
+		return;
+	}
 }
