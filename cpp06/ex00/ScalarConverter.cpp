@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/31 14:40:31 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:57:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,43 @@ SpecialType checkSpecialValue(const std::string& input) {
 	return SpecialType::NOT_SPECIAL;
 }
 
-void printSpecialValues(SpecialType specialType) {
+void printSpecialValues(SpecialType specialType, const std::string& input) {
 	switch (specialType) {
 		case SpecialType::NOT_A_NUMBER:
+		{
+			double d_value = std::stod(input);
+			float f_value = static_cast<float>(d_value);
+
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: nanf" << std::endl;
-			std::cout << "double: nan" << std::endl;
-			break;
+			std::cout << "float: " << f_value << "f" << std::endl;
+			std::cout << "double: " << d_value << std::endl;
+		}
+		break;
 
 		case SpecialType::INF_POS:
+		{
+			double d_value = std::stod(input);
+			float f_value = static_cast<float>(d_value);
+
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: +inff" << std::endl;
-			std::cout << "double: +inf" << std::endl;
-			break;
+			std::cout << "float: " << f_value << "f" << std::endl;
+			std::cout << "double: " << d_value << std::endl;
+		}
+		break;
 
 		case SpecialType::INF_NEG:
+		{
+			double d_value = std::stod(input);
+			float f_value = static_cast<float>(d_value);
+
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: -inff" << std::endl;
-			std::cout << "double: -inf" << std::endl;
-			break;
+			std::cout << "float: " << f_value << "f" << std::endl;
+			std::cout << "double: " << d_value << std::endl;
+		}
+		break;
 
 		case SpecialType::NOT_SPECIAL:
 			break;
@@ -102,7 +117,7 @@ void ScalarConverter::convert(const std::string &input){
 	SpecialType specialType = checkSpecialValue(input);
 
 	if (specialType != SpecialType::NOT_SPECIAL) {
-		printSpecialValues(specialType);
+		printSpecialValues(specialType, input);
 		return;
 	}
 

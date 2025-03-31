@@ -20,6 +20,7 @@
 #include <cmath> 		//modf
 #include <algorithm>	//transform
 #include <cctype>		//tolower
+#include <limits>		//numeric_limits
 
 class ScalarConverter{
 	private:
