@@ -15,6 +15,7 @@
 # define SCALARCONVERTER_HPP
 
 #include <string>
+#include <iostream>
 
 class ScalarConverter{
 	private:
@@ -24,7 +25,7 @@ class ScalarConverter{
 		ScalarConverter &operator=(const ScalarConverter &other)=delete;
 	
 	public:
-		static void convert(const std::string &nput);
+		static void convert(const std::string &input);
 };
 
 #endif // SCALARCONVERTER_HPP
