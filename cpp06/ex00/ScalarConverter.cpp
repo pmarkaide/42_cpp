@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/31 14:57:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:00:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 		case SpecialType::NOT_A_NUMBER:
 		{
 			double d_value = std::stod(input);
-			float f_value = static_cast<float>(d_value);
+			float f_value = static_cast<float>(std::stod(input));
 
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
@@ -53,7 +53,7 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 		case SpecialType::INF_POS:
 		{
 			double d_value = std::stod(input);
-			float f_value = static_cast<float>(d_value);
+			float f_value = static_cast<float>(std::stod(input));
 
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
@@ -65,7 +65,7 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 		case SpecialType::INF_NEG:
 		{
 			double d_value = std::stod(input);
-			float f_value = static_cast<float>(d_value);
+			float f_value = static_cast<float>(std::stod(input));
 
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
@@ -80,7 +80,10 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 }
 
 void print_char(double value){
-	std::cout << "char: " << static_cast<char>(value) << std::endl;
+	if(value > 32 && value < 127)
+		std::cout << "char: " << static_cast<char>(value) << std::endl;
+	else
+		std::cout << "char: impossible" << std::endl;
 }
 
 void print_int(double value){
