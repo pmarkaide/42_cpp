@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 11:04:14 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:26:29 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ LiteralType detectType(const std::string& input) {
 	return LiteralType::INVALID;
 }
 
-void print_char(double value){
+void printChar(double value){
 	if (value < 0 || value > 127) {
 		std::cout << "char: impossible" << std::endl;
 	} else if (value < 32 || value == 127) {
@@ -138,7 +138,7 @@ void print_char(double value){
 	}
 }
 
-void print_int(double value){
+void printInt(double value){
 	if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min()) {
 		std::cout << "int: impossible" << std::endl;
 	} else {
@@ -146,10 +146,10 @@ void print_int(double value){
 	}
 }
 
-void print_float(double value){
+void printFloat(double value){
 
 	float f_value = static_cast<float>(value);
-	
+
 	// Check if the number has a fractional part
 	double intPart;
 	double fracPart = std::modf(value, &intPart);
@@ -161,7 +161,7 @@ void print_float(double value){
 	}
 }
 
-void print_double(double value){
+void printDouble(double value){
 
 	// Check if the number has a fractional part
 	double intPart;
@@ -174,25 +174,53 @@ void print_double(double value){
 	}
 }
 
-void ScalarConverter::convert(const std::string &input){
-
+void ScalarConverter::convert(const std::string &input) {
 	SpecialType specialType = checkSpecialValue(input);
-
 	if (specialType != SpecialType::NOT_SPECIAL) {
 		printSpecialValues(specialType, input);
 		return;
 	}
 
-	try{
-		double value = std::stod(input);
+	LiteralType type = detectType(input);
+	double d_value = 0.0;
 
-		print_char(value);
-		print_int(value);
-		print_float(value);
-		print_double(value);
+	try {
+		switch (type) {
+			case LiteralType::CHAR:
+				d_value = static_cast<double>(input[0]);
+				break;
 
-	}catch(std::exception &e){
+			case LiteralType::INT:
+				d_value = static_cast<double>(std::stoi(input));
+				break;
+
+			case LiteralType::FLOAT:
+				{
+					std::string floatStr = input;
+					if (floatStr[floatStr.length() - 1] == 'f')
+						floatStr = floatStr.substr(0, floatStr.length() - 1);
+					d_value = static_cast<double>(std::stof(floatStr));
+				}
+				break;
+				
+			case LiteralType::DOUBLE:
+				d_value = std::stod(input);
+				break;
+
+			case LiteralType::INVALID:
+			default:
+				throw std::invalid_argument("Invalid input format");
+		}
+
+		printChar(d_value);
+		printInt(d_value);
+		printFloat(d_value);
+		printDouble(d_value);
+
+	} catch (const std::exception &e) {
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
 		std::cout << "double: impossible" << std::endl;
-		return;
 	}
 }
