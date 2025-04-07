@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/02 14:00:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:47:58 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,35 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 }
 
 void print_char(double value){
-	if(value > 32 && value < 127)
-		std::cout << "char: " << static_cast<char>(value) << std::endl;
-	else
+	if (value < 0 || value > 127) {
 		std::cout << "char: impossible" << std::endl;
+	} else if (value < 32 || value == 127) {
+		std::cout << "char: Non displayable" << std::endl;
+	} else {
+		std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+	}
 }
 
 void print_int(double value){
-	std::cout << "int: " << static_cast<int>(value) << std::endl;
+	if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min()) {
+		std::cout << "int: impossible" << std::endl;
+	} else {
+		std::cout << "int: " << static_cast<int>(value) << std::endl;
+	}
 }
 
 void print_float(double value){
+
+	float f_value = static_cast<float>(value);
+	
 	// Check if the number has a fractional part
 	double intPart;
 	double fracPart = std::modf(value, &intPart);
 
 	if (fracPart == 0.0) {
-		std::cout << "float: " << value << ".0f" << std::endl;
+		std::cout << "float: " << f_value << ".0f" << std::endl;
 	} else {
-		std::cout << "float: " << value << "f" << std::endl;
+		std::cout << "float: " << f_value << "f" << std::endl;
 	}
 }
 
