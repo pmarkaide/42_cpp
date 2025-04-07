@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 11:26:29 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:45:40 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,17 @@ SpecialType checkSpecialValue(const std::string& input) {
 }
 
 void printSpecialValues(SpecialType specialType, const std::string& input) {
-	switch (specialType) {
-		case SpecialType::NOT_A_NUMBER:
-		{
-			double d_value = std::stod(input);
-			float f_value = static_cast<float>(std::stod(input));
 
-			std::cout << "char: impossible" << std::endl;
-			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: " << f_value << "f" << std::endl;
-			std::cout << "double: " << d_value << std::endl;
-		}
-		break;
+	if(specialType == SpecialType::NOT_SPECIAL)
+		return;
 
-		case SpecialType::INF_POS:
-		{
-			double d_value = std::stod(input);
-			float f_value = static_cast<float>(std::stod(input));
+	double d_value = std::stod(input);
+	float f_value = std::stof(input);
 
-			std::cout << "char: impossible" << std::endl;
-			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: " << f_value << "f" << std::endl;
-			std::cout << "double: " << d_value << std::endl;
-		}
-		break;
-
-		case SpecialType::INF_NEG:
-		{
-			double d_value = std::stod(input);
-			float f_value = static_cast<float>(std::stod(input));
-
-			std::cout << "char: impossible" << std::endl;
-			std::cout << "int: impossible" << std::endl;
-			std::cout << "float: " << f_value << "f" << std::endl;
-			std::cout << "double: " << d_value << std::endl;
-		}
-		break;
-
-		case SpecialType::NOT_SPECIAL:
-			break;
-	}
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << f_value << "f" << std::endl;
+	std::cout << "double: " << d_value << std::endl;
 }
 
 enum class LiteralType {
