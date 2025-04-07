@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 14:28:00 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:01:49 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ LiteralType detectType(const std::string& input) {
 	return LiteralType::INVALID;
 }
 
-void printChar(double value){
+void printChar(double value) {
 	if (value < 0 || value > 127) {
 		std::cout << "char: impossible" << std::endl;
 	} else if (value <= 32 || value == 127) {
@@ -118,12 +118,14 @@ void printInt(double value){
 }
 
 void printFloat(double value) {
-	float f_value = static_cast<float>(value);
-
-	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max()) {
+	if (std::isinf(value) ||
+		value >= std::numeric_limits<float>::max() ||
+		value <= -std::numeric_limits<float>::max()) {
 		std::cout << "float: impossible" << std::endl;
 		return;
 	}
+
+	float f_value = static_cast<float>(value);
 
 	if (std::floor(value) == value) {
 		std::cout << std::fixed << std::setprecision(1);
@@ -135,7 +137,7 @@ void printFloat(double value) {
 }
 
 void printDouble(double value) {
-	if (value > std::numeric_limits<double>::max() || value < -std::numeric_limits<double>::max()) {
+	if (std::isinf(value)) {
 		std::cout << "double: impossible" << std::endl;
 		return;
 	}

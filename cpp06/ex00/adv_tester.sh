@@ -105,6 +105,7 @@ test_conversion "4.2" "Non displayable" "4" "4.2f" "4.2"
 test_conversion "-4.2" "impossible" "-4" "-4.2f" "-4.2"
 test_conversion "4.2f" "Non displayable" "4" "4.2f" "4.2"
 test_conversion "-4.2f" "impossible" "-4" "-4.2f" "-4.2"
+test_conversion "42.0f" "*" "42" "42.0f" "42.0"
 test_conversion "a" "a" "97" "97.0f" "97.0"
 
 # Special values
@@ -124,11 +125,21 @@ test_conversion "2147483648" "impossible" "impossible" "2147483648.0f" "21474836
 test_conversion "0.0" "Non displayable" "0" "0.0f" "0.0"
 test_conversion ".42" "Non displayable" "0" "0.42f" "0.42"
 test_conversion "42." "*" "42" "42.0f" "42.0"
-# Invalid formats should result in impossible conversions for all types
+test_conversion "42.424242" "*" "42" "42.424242f" "42.424242"
+test_conversion "-42.424242" "impossible" "-42" "-42.424242f" "-42.424242"
+test_conversion "42.000000" "*" "42" "42.0f" "42.0"
+test_conversion "-42.000000" "impossible" "-42" "-42.0f" "-42.0"
+test_conversion "340282346638528859811704183484516925440.0f" "impossible" "impossible" "impossible" "impossible"
+test_conversion "-340282346638528859811704183484516925440.0f" "impossible" "impossible" "impossible" "impossible"
+test_conversion "1.7976931348623157e+308" "impossible" "impossible" "impossible" "1.7976931348623157e+308"
+test_conversion "-1.7976931348623157e+308" "impossible" "impossible" "impossible" "-1.7976931348623157e+308"
 test_conversion "4.2.0" "impossible" "impossible" "impossible" "impossible"
 test_conversion "" "impossible" "impossible" "impossible" "impossible"
 test_conversion " " "Non displayable" "32" "32.0f" "32.0"
 test_conversion "hello" "impossible" "impossible" "impossible" "impossible"
+test_conversion "42.42.42" "impossible" "impossible" "impossible" "impossible"
+test_conversion "42.0000000000001" "*" "42" "42.0000000000001f" "42.0000000000001"
+test_conversion "-42.0000000000001" "impossible" "-42" "-42.0000000000001f" "-42.0000000000001"
 
 # Print summary
 echo -e "\n${BLUE}======================================${NC}"
