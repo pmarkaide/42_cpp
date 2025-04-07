@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 10:47:58 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:04:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,55 @@ void printSpecialValues(SpecialType specialType, const std::string& input) {
 		case SpecialType::NOT_SPECIAL:
 			break;
 	}
+}
+
+enum class LiteralType {
+	CHAR,
+	INT,
+	FLOAT,
+	DOUBLE,
+	INVALID
+};
+
+bool isValidNumber(const std::string& input) {
+	bool hasDecimalPoint = false;
+
+	for (size_t i = 0; i < input.length(); i++) {
+		if (i == 0 && (input[i] == '+' || input[i] == '-')) {
+			continue;
+		}
+		if (input[i] == '.' && !hasDecimalPoint) {
+			hasDecimalPoint = true;
+			continue;
+		}
+		if (!std::isdigit(input[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+LiteralType detectType(const std::string& input) {
+
+	// Char
+	if (input.length() == 1 && !std::isdigit(input[0])) {
+		return LiteralType::CHAR;
+	}
+
+	// Float
+	if (input.length() > 1 && input[input.length() - 1] == 'f') {
+		std::string floatPart = input.substr(0, input.length() - 1);
+		if (isValidNumber(floatPart)) {
+			return LiteralType::FLOAT;
+		}
+	}
+
+	// Double
+	if (isValidNumber(input)) {
+		return input.find('.') != std::string::npos ? LiteralType::DOUBLE : LiteralType::INT;
+	}
+
+	return LiteralType::INVALID;
 }
 
 void print_char(double value){
