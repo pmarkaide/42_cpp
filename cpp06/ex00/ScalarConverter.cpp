@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 12:20:43 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:28:00 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,32 +117,36 @@ void printInt(double value){
 	}
 }
 
-void printFloat(double value){
-
+void printFloat(double value) {
 	float f_value = static_cast<float>(value);
 
-	// Check if the number has a fractional part
-	double intPart;
-	double fracPart = std::modf(value, &intPart);
-
-	if (fracPart == 0.0) {
-		std::cout << "float: " << f_value << ".0f" << std::endl;
-	} else {
-		std::cout << "float: " << f_value << "f" << std::endl;
+	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max()) {
+		std::cout << "float: impossible" << std::endl;
+		return;
 	}
+
+	if (std::floor(value) == value) {
+		std::cout << std::fixed << std::setprecision(1);
+	} else {
+		std::cout.unsetf(std::ios::fixed);
+		std::cout << std::setprecision(std::numeric_limits<float>::digits10 + 1);
+	}
+	std::cout << "float: " << f_value << "f" << std::endl;
 }
 
-void printDouble(double value){
-
-	// Check if the number has a fractional part
-	double intPart;
-	double fracPart = std::modf(value, &intPart);
-
-	if (fracPart == 0.0) {
-		std::cout << "double: " << value << ".0" << std::endl;
-	} else {
-		std::cout << "double: " << value << std::endl;
+void printDouble(double value) {
+	if (value > std::numeric_limits<double>::max() || value < -std::numeric_limits<double>::max()) {
+		std::cout << "double: impossible" << std::endl;
+		return;
 	}
+
+	if (std::floor(value) == value) {
+		std::cout << std::fixed << std::setprecision(1);
+	} else {
+		std::cout.unsetf(std::ios::fixed);
+		std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1);
+	}
+	std::cout << "double: " << value << std::endl;
 }
 
 void ScalarConverter::convert(const std::string &input) {
@@ -162,7 +166,7 @@ void ScalarConverter::convert(const std::string &input) {
 				break;
 
 			case LiteralType::INT:
-				d_value = static_cast<double>(std::stoi(input));
+				d_value = std::stod(input);
 				break;
 
 			case LiteralType::FLOAT:
@@ -170,7 +174,7 @@ void ScalarConverter::convert(const std::string &input) {
 					std::string floatStr = input;
 					if (floatStr[floatStr.length() - 1] == 'f')
 						floatStr = floatStr.substr(0, floatStr.length() - 1);
-					d_value = static_cast<double>(std::stof(floatStr));
+					d_value = std::stod(floatStr);
 				}
 				break;
 				
