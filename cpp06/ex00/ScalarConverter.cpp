@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:42:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/07 11:45:40 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:20:43 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ LiteralType detectType(const std::string& input) {
 void printChar(double value){
 	if (value < 0 || value > 127) {
 		std::cout << "char: impossible" << std::endl;
-	} else if (value < 32 || value == 127) {
+	} else if (value <= 32 || value == 127) {
 		std::cout << "char: Non displayable" << std::endl;
 	} else {
-		std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+		std::cout << "char: " << static_cast<char>(value) << std::endl;
 	}
 }
 
