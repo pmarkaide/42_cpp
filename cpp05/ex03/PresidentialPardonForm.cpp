@@ -6,12 +6,9 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:45:06 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:49:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:42:42 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef PRESIDENTIALPARDONFORM_HPP
- #define PRESIDENTIALPARDONFORM_HPP
 
 #include "PresidentialPardonForm.hpp"
 
@@ -46,5 +43,3 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(PresidentialPardonForm
 void	PresidentialPardonForm::beExecuted(void) const{
 	std::cout << target_ << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 }
-
-#endif // PRESIDENTIALPARDONFORM_HPP

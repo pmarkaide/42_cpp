@@ -6,9 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:44:59 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/03/24 17:42:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:42:11 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PRESIDENTIALPARDONFORM_HPP
+ #define PRESIDENTIALPARDONFORM_HPP
 
 #include "AForm.hpp"
 
@@ -27,3 +30,6 @@ class PresidentialPardonForm: public AForm{
 		// actions
 		void	beExecuted(void) const override;
 };
+
+
+#endif // PRESIDENTIALPARDONFORM_HPP
