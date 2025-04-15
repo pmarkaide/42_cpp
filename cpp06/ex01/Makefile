@@ -6,12 +6,12 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/15 16:58:18 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/04/15 17:17:36 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/04/15 17:36:16 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = convert
+NAME = serialize
 
 SRCS = 					\
 		main.cpp 		\
