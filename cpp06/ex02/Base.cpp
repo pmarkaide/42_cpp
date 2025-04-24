@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:34:13 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/24 12:40:46 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:47:04 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,44 @@ Base* generate(void) {
 		default:
 			return NULL;
 	}
+}
+
+
+// dynamic_cast return null if the cast cannot be done
+// it safer, as we don't need to catch a throw
+void identify(Base* p) {
+	if (dynamic_cast<A*>(p) != nullptr) {
+		std::cout << "A" << std::endl;
+	} else if (dynamic_cast<B*>(p) != nullptr) {
+		std::cout << "B" << std::endl;
+	} else if (dynamic_cast<C*>(p) != nullptr) {
+		std::cout << "C" << std::endl;
+	} else {
+		std::cout << "Unknown type" << std::endl;
+	}
+}
+
+// We can't use pointers directly, so we use try/catch with dynamic_cast
+// When dynamic_cast fails with references, it throws a std::bad_cast exception
+void identify(Base& p) {
+
+	try {
+		(void)dynamic_cast<A&>(p);
+		std::cout << "A" << std::endl;
+		return;
+	} catch (std::bad_cast&) {}
+
+	try {
+		(void)dynamic_cast<B&>(p);
+		std::cout << "B" << std::endl;
+		return;
+	} catch (std::bad_cast&) {}
+
+	try {
+		(void)dynamic_cast<C&>(p);
+		std::cout << "C" << std::endl;
+		return;
+	} catch (std::bad_cast&) {}
+
+	std::cout << "Unknown type" << std::endl;
 }
