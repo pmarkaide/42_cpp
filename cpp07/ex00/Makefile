@@ -6,15 +6,14 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/29 15:42:23 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/04/24 20:46:01 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/04/24 20:47:27 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = whatever
 
 SRCS = 					\
-		main.cpp 		\
-		Whatever.hpp
+		main.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)
