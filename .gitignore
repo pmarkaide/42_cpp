@@ -10,3 +10,4 @@
 # Ignore these
 *.o
 *.code-workspace
+.vscode/settings.json
