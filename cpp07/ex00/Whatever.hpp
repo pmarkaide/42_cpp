@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Functions.hpp                                      :+:      :+:    :+:   */
+/*   Whatever.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:21:40 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/24 20:40:36 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:45:20 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_HPP
-# define FUNCTIONS_HPP
+#ifndef Whatever_HPP
+# define Whatever_HPP
 
 
 template<typename T>
@@ -33,4 +33,4 @@ const T& max(const T& a, const T& b) {
 	return (a > b) ? a : b;
 }
 
-#endif // FUNCTIONS_HPP
+#endif // Whatever_HPP
