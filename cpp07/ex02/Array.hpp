@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 22:01:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/25 11:49:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:02:59 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,20 @@ public:
 	// Subscript operator with bounds checking
 	T& operator[](unsigned int index) {
 		if (index >= size_)
-			throw std::out_of_range("Index out of bounds");
+			throw OutOfBoundsException();
 		return elements_[index];
 	}
 
 	unsigned int size() const {
 		return size_;
 	}
+
+	class OutOfBoundsException : public std::exception {
+		public:
+			virtual const char* what() const throw() {
+				return "Index out of bounds";
+			}
+		};
 };
 
 #endif // ARRAY_HPP
