@@ -1,0 +1,13 @@
+# Ignore all files without extension
+*
+!/**/
+!*.*
+*infile*
+
+# Except these
+!Makefile
+
+# Ignore these
+*.o
+*.code-workspace
+.vscode/settings.json

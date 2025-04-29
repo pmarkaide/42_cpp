@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 22:01:53 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/25 14:02:59 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/29 09:55:06 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ public:
 
 	// Subscript operator with bounds checking
 	T& operator[](unsigned int index) {
+		if (index >= size_)
+			throw OutOfBoundsException();
+		return elements_[index];
+	}
+
+	const T& operator[](unsigned int index) const {
 		if (index >= size_)
 			throw OutOfBoundsException();
 		return elements_[index];
