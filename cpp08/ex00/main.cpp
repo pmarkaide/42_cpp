@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 20:40:21 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/29 21:41:50 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/29 21:46:57 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main()
         std::cout << "Exception: " << e.what() << std::endl;
     }
     
+	std::cout << "\n=== Testing with vector: not found error ===" << std::endl;
     try {
         auto result = easyfind(vec, 10);  // Value not in vector
         std::cout << "Found value: " << *result << std::endl;
