@@ -6,12 +6,9 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:15:51 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/29 22:45:26 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:03:20 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <iostream>
-#include "Span.hpp"
 
 #include <iostream>
 #include <ctime>    // For time() function
@@ -99,9 +96,47 @@ void testEdgeCases()
     }
 }
 
+void testSimpleAddRange()
+{
+    std::cout << "\n=== Testing Simple addRange ===" << std::endl;
+    
+    try {
+        // Create a span with capacity for 25 numbers
+        Span sp(25);
+        
+        // Add a few individual numbers first
+        sp.addNumber(100);
+        sp.addNumber(500);
+        std::cout << "Added two numbers individually." << std::endl;
+        
+        // Create an array of numbers to add at once
+        int arr[] = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        std::cout << "Adding 10 numbers from array using addRange..." << std::endl;
+        sp.addRange(arr, arr + 10);
+        
+        // Create a vector of more numbers
+        std::vector<int> vec = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
+        std::cout << "Adding 10 numbers from vector using addRange..." << std::endl;
+        sp.addRange(vec.begin(), vec.end());
+        
+        // Check the spans
+        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+        
+        // Test the exception by trying to add more than capacity
+        std::cout << "Trying to add more elements than remaining capacity (should throw)..." << std::endl;
+        int more[] = {30, 40, 50, 60, 70};
+        sp.addRange(more, more + 5);
+    }
+    catch (const std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+}
+
 int main()
 {
     testBasicFunctionality();
     testEdgeCases();
+    testSimpleAddRange();
     return 0;
 }
