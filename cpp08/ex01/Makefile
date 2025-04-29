@@ -6,14 +6,15 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/29 15:42:23 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/04/29 21:35:31 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/04/29 22:16:46 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = easyfind
+NAME = span
 
 SRCS = 					\
-		main.cpp
+		main.cpp 		\
+		Span.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)

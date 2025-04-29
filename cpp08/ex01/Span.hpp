@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 21:51:23 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/04/29 21:59:08 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:10:27 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #include <vector>
 #include <exception>
+#include <algorithm>	// minmax_element
+//#include <limits>		// numeric_limits
 
 class Span
 {
@@ -30,7 +32,9 @@ public:
 	Span& operator=(const Span& other);
 	~Span();
 
-
+	void addNumber(int number);
+	//unsigned int shortestSpan() const;
+	unsigned int longestSpan() const;
 	class FullVectorException : public std::exception
 	{
 	public:
