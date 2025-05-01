@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/01 15:47:09 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:18:56 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ private:
     }
     
 public:
-	Container container_;
+	Container vec_;
     typedef typename Container::value_type ValueType;
     typedef typename Container::iterator Iterator;
     
     PmergeMe() {}
     
-    PmergeMe(const PmergeMe& src) : container_(src.container_) {}
+    PmergeMe(const Container& container) : vec_(container) {}
+    
+    PmergeMe(const PmergeMe& src) : vec_(src.vec_) {}
     
     PmergeMe& operator=(const PmergeMe& src) {
         if (this != &src) {
-            container_ = src.container_;
+            vec_ = src.vec_;
         }
         return *this;
     }
@@ -72,48 +74,56 @@ public:
             
             int num = std::stoi(arg);
             
-            if (std::find(container_.begin(), container_.end(), num) != container_.end()) {
+            if (std::find(vec_.begin(), vec_.end(), num) != vec_.end()) {
                 return false;
             }
             
-            container_.push_back(num);
+            vec_.push_back(num);
         }
         
         return true;
     }
     
-    Iterator begin() { return container_.begin(); }
-    Iterator end() { return container_.end(); }
+    Iterator begin() { return vec_.begin(); }
+    Iterator end() { return vec_.end(); }
     
     void display(const std::string& prefix) const {
         std::cout << prefix;
-        for (auto num : container_) {
+        for (auto num : vec_) {
             std::cout << num << " ";
         }
         std::cout << std::endl;
     }
 
-	Container sort(Container& container) {
-        size_t order = 1;
-        size_t element_size = container.size() / order;
-        
-        typedef typename Container::iterator Iterator;
-        
-        if (element_size < 2) return container;
-        
-        Iterator start = container.begin();
-        Iterator end = container.end();
-        
-        for (Iterator it = start; it < end; it += (order * 2)) {
-            if (it + (order * 2 - 1) < end && 
-                *(it + (order - 1)) > *(it + ((order * 2) - 1))) {
-                for (size_t i = 0; i < order; i++) {
-                    std::swap(*(it + i), *(it + i + order));
-                }
-            }
-        }
-        return container;
-    }
+	void sort(Container& container, int order = 1) {
+		
+		// Base case: if elements per group is too small or equal to container size
+		size_t element_size = container.size() / order;
+		if (element_size < 2) return;
+		
+		bool is_odd = element_size % 2 == 1;
+		Iterator start = vec_.begin();
+		Iterator end = vec_.begin() + ((order * element_size) - (is_odd * order));
+	
+		for (Iterator it = start; it < end; it += (order * 2)) {
+			if (*(it + (order - 1)) > *(it + ((order * 2) - 1))) {
+				for (int i = 0; i < order; i++) {
+					std::swap(*(it + i), *(it + i + order));
+				}
+			}
+		}
+
+		std::cout << "After order " << order << ": ";
+		for (size_t i = 0; i < container.size(); i++) {
+			std::cout << container[i] << " ";
+			if ((i + 1) % order == 0 && i < container.size() - 1) {
+				std::cout << "|| ";
+			}
+		}
+		std::cout << std::endl;
+	   
+		sort(container, order * 2);
+	}
 };
 
 template <typename Container>

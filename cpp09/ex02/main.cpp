@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:40:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/01 15:44:52 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:04:38 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     }
     
     vec_sorter.display("Before: ");
-	vec_sorter.sort(vec_sorter.container_);
+	vec_sorter.sort(vec_sorter.vec_);
 	vec_sorter.display("After:  ");
     return 0;
 }
