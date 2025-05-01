@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/01 12:44:45 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:44:15 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,6 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& src) {
 
 PmergeMe::~PmergeMe() {}
 
-bool PmergeMe::isValidInput(const std::string& input) {
-    // Check if input string has only digits
-    for (size_t i = 0; i < input.length(); i++) {
-        if (!isdigit(input[i])) {
-            return false;
-        }
-    }
-    
-    // Check if it's within int range and positive
-    long num = std::atol(input.c_str());
-    if (num <= 0 || num > INT_MAX) {
-        return false;
-    }
-    
-    return true;
-}
-
 bool PmergeMe::parseArguments(int argc, char **argv) {
     if (argc < 2) {
         return false;
@@ -57,34 +40,18 @@ bool PmergeMe::parseArguments(int argc, char **argv) {
             return false;
         }
         
-        int num = std::atoi(arg.c_str());
+        int num = std::stoi(arg);
         
-        // Check for duplicates
-        for (size_t j = 0; j < _numbers_vec.size(); j++) {
-            if (_numbers_vec[j] == num) {
-                return false;
-            }
+        // Check for duplicates using modern algorithms
+        if (std::find(_numbers_vec.begin(), _numbers_vec.end(), num) != _numbers_vec.end()) {
+            return false;
         }
         
-        _numbers_vec.push_back(num);
-        _numbers_deq.push_back(num);
+        // Use emplace_back instead of push_back
+        _numbers_vec.emplace_back(num);
+        _numbers_deq.emplace_back(num);
     }
     
     return true;
 }
 
-void PmergeMe::displayBeforeSort() const {
-    std::cout << "Before: ";
-    for (size_t i = 0; i < _numbers_vec.size(); i++) {
-        std::cout << _numbers_vec[i] << " ";
-    }
-    std::cout << std::endl;
-}
-
-void PmergeMe::displayAfterSort() const {
-    std::cout << "After:  ";
-    for (size_t i = 0; i < _numbers_vec.size(); i++) {
-        std::cout << _numbers_vec[i] << " ";
-    }
-    std::cout << std::endl;
-}
