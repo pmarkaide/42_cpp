@@ -6,15 +6,14 @@
 #    By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/29 15:42:23 by pmarkaid          #+#    #+#              #
-#    Updated: 2025/05/01 12:39:15 by pmarkaid         ###   ########.fr        #
+#    Updated: 2025/05/01 15:05:51 by pmarkaid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = PmergeMe
 
 SRCS = 					\
-		main.cpp 		\
-		PmergeMe.cpp
+		main.cpp
 
 
 OBJS = $(SRCS:.cpp=.o)
