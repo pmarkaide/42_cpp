@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/01 15:01:27 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:47:09 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@
 
 template <typename Container>
 class PmergeMe {
-private:
-    Container container_;
-    
+private:   
     bool isValidInput(const std::string& input) {
         // Check if input string has only digits
         if (std::any_of(input.begin(), input.end(), [](char c) { return !std::isdigit(c); })) {
@@ -43,6 +41,7 @@ private:
     }
     
 public:
+	Container container_;
     typedef typename Container::value_type ValueType;
     typedef typename Container::iterator Iterator;
     
@@ -59,7 +58,6 @@ public:
     
     ~PmergeMe() {}
     
-    // Parse input arguments
     bool parseArguments(int argc, char **argv) {
         if (argc < 2) {
             return false;
@@ -84,21 +82,40 @@ public:
         return true;
     }
     
-    // Iterator methods
     Iterator begin() { return container_.begin(); }
     Iterator end() { return container_.end(); }
     
-    // Display container with label
-    void display(const std::string& label) {
-        std::cout << label;
-        for (Iterator it = begin(); it != end(); ++it) {
-            std::cout << *it << " ";
+    void display(const std::string& prefix) const {
+        std::cout << prefix;
+        for (auto num : container_) {
+            std::cout << num << " ";
         }
         std::cout << std::endl;
     }
+
+	Container sort(Container& container) {
+        size_t order = 1;
+        size_t element_size = container.size() / order;
+        
+        typedef typename Container::iterator Iterator;
+        
+        if (element_size < 2) return container;
+        
+        Iterator start = container.begin();
+        Iterator end = container.end();
+        
+        for (Iterator it = start; it < end; it += (order * 2)) {
+            if (it + (order * 2 - 1) < end && 
+                *(it + (order - 1)) > *(it + ((order * 2) - 1))) {
+                for (size_t i = 0; i < order; i++) {
+                    std::swap(*(it + i), *(it + i + order));
+                }
+            }
+        }
+        return container;
+    }
 };
 
-// Overload output operator for PmergeMe
 template <typename Container>
 std::ostream& operator<<(std::ostream& os, const PmergeMe<Container>& obj) {
     for (typename PmergeMe<Container>::Iterator it = obj.begin(); it != obj.end(); ++it) {
