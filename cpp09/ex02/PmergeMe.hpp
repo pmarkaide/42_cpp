@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/02 10:50:11 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:23:14 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@
 #include <cstdlib>
 #include <climits>
 #include <algorithm>
-#include <ctime>
+#include <cmath>
 
-// Jacobsthal number calculation
-size_t getJacobsthalNumber(size_t n) {
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    return getJacobsthalNumber(n - 1) + 2 * getJacobsthalNumber(n - 2);
+// Efficient Jacobsthal number calculation
+inline size_t getJacobsthalNumber(size_t n) {
+    // Formula: (2^(n+1) - (-1)^n) / 3
+    double pow2 = std::pow(2, n + 1);
+    double powNeg1 = (n % 2 == 0) ? 1 : -1;
+    return static_cast<size_t>((pow2 - powNeg1) / 3);
 }
 
 // Get Jacobsthal sequence up to a certain limit
-std::vector<size_t> getJacobsthalSequence(size_t limit) {
+inline std::vector<size_t> getJacobsthalSequence(size_t limit) {
     std::vector<size_t> sequence;
     size_t n = 3; // Start from 3rd Jacobsthal number (3)
     
@@ -47,7 +48,12 @@ std::vector<size_t> getJacobsthalSequence(size_t limit) {
 
 template <typename Container>
 class PmergeMe {
-private:   
+private:
+    bool debug_; // Debug flag for printing
+    int comparisons_; // Count comparisons for testing
+    
+    typedef typename Container::value_type ValueType;
+    
     bool isValidInput(const std::string& input) {
         // Check if input string has only digits
         if (std::any_of(input.begin(), input.end(), [](char c) { return !std::isdigit(c); })) {
@@ -63,33 +69,55 @@ private:
         }
     }
     
-    // Helper function to advance iterator
-    template <typename Iterator>
-    Iterator advanceIterator(Iterator it, int steps) {
-        Iterator result = it;
-        std::advance(result, steps);
-        return result;
+    // Print container with optional markers
+    void printContainer(const Container& cont, const std::string& label) {
+        if (!debug_) return;
+        
+        std::cout << label << ": ";
+        for (const ValueType& val : cont) {
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
     }
+    
+    // Comparison function that counts comparisons
+    bool compare(const ValueType& a, const ValueType& b) {
+        comparisons_++;
+        return a < b;
+    }
+    
+    // Custom comparison for pairs
+    struct PairCompare {
+        PmergeMe* sorter;
+        
+        PairCompare(PmergeMe* s) : sorter(s) {}
+        
+        bool operator()(const std::pair<ValueType, ValueType>& p1, 
+                         const std::pair<ValueType, ValueType>& p2) const {
+            return sorter->compare(p1.second, p2.second);
+        }
+    };
+    
+    // Custom comparator for binary search
+    struct ValueCompare {
+        PmergeMe* sorter;
+        
+        ValueCompare(PmergeMe* s) : sorter(s) {}
+        
+        bool operator()(const ValueType& a, const ValueType& b) const {
+            return sorter->compare(a, b);
+        }
+    };
     
 public:
     Container vec_;
-    typedef typename Container::value_type ValueType;
-    typedef typename Container::iterator Iterator;
     
-    PmergeMe() {}
-    
-    PmergeMe(const Container& container) : vec_(container) {}
-    
-    PmergeMe(const PmergeMe& src) : vec_(src.vec_) {}
-    
-    PmergeMe& operator=(const PmergeMe& src) {
-        if (this != &src) {
-            vec_ = src.vec_;
-        }
-        return *this;
-    }
-    
+    PmergeMe() : debug_(false), comparisons_(0) {}
+    PmergeMe(bool debug) : debug_(debug), comparisons_(0) {}
     ~PmergeMe() {}
+    
+    void setDebug(bool debug) { debug_ = debug; }
+    int getComparisons() const { return comparisons_; }
     
     bool parseArguments(int argc, char **argv) {
         if (argc < 2) {
@@ -105,6 +133,7 @@ public:
             
             int num = std::stoi(arg);
             
+            // Check for duplicates
             if (std::find(vec_.begin(), vec_.end(), num) != vec_.end()) {
                 return false;
             }
@@ -115,141 +144,137 @@ public:
         return true;
     }
     
-    Iterator begin() { return vec_.begin(); }
-    Iterator end() { return vec_.end(); }
-    
     void display(const std::string& prefix) const {
         std::cout << prefix;
-        for (auto num : vec_) {
+        for (const ValueType& num : vec_) {
             std::cout << num << " ";
         }
         std::cout << std::endl;
     }
-
-    // First phase: sort pairs by comparing larger elements
-    void sortPairs(Container& container, int order = 1) {
-        // Base case: if elements per group is too small or equal to container size
-        size_t element_size = container.size() / order;
-        if (element_size < 2) return;
-        
-        bool is_odd = element_size % 2 == 1;
-        Iterator start = vec_.begin();
-        Iterator end = vec_.begin() + ((order * element_size) - (is_odd * order));
     
-        for (Iterator it = start; it < end; it += (order * 2)) {
-            if (*(it + (order - 1)) > *(it + ((order * 2) - 1))) {
-                for (int i = 0; i < order; i++) {
-                    std::swap(*(it + i), *(it + i + order));
-                }
-            }
+    // Ford-Johnson / Merge-Insert Sort
+    void sort(Container& container) {
+        comparisons_ = 0; // Reset comparison counter
+        
+        if (container.size() <= 1) return; // Already sorted
+        
+        if (debug_) {
+            printContainer(container, "Original array");
         }
         
-        sortPairs(container, order * 2);
-    }
-    
-    // Second phase: merge-insertion using Jacobsthal numbers
-    void mergeInsert(Container& container) {
-        if (container.size() <= 1) return;
+        // Step 1: Make pairs and sort them
+        bool hasOdd = (container.size() % 2 == 1);
+        ValueType oddElement;
         
-        // Create pairs and handle odd element
-        bool hasOddElement = container.size() % 2 == 1;
-        ValueType oddElement = hasOddElement ? container.back() : ValueType();
+        if (hasOdd) {
+            oddElement = container.back();
+            container.pop_back();
+        }
         
+        // Create sorted pairs
         std::vector<std::pair<ValueType, ValueType>> pairs;
-        for (size_t i = 0; i < container.size() - hasOddElement; i += 2) {
+        for (size_t i = 0; i < container.size(); i += 2) {
             ValueType a = container[i];
             ValueType b = container[i + 1];
-            if (a > b) std::swap(a, b);
-            pairs.push_back(std::make_pair(a, b));
+            
+            if (compare(b, a)) {
+                std::swap(a, b);
+            }
+            
+            pairs.push_back(std::make_pair(a, b)); // a is smaller, b is larger
         }
         
-        // Sort by second element (larger elements)
-        std::sort(pairs.begin(), pairs.end(), 
-                 [](const std::pair<ValueType, ValueType>& a, const std::pair<ValueType, ValueType>& b) {
-                     return a.second < b.second;
-                 });
+        // Step 2: Sort pairs by their larger element (b values)
+        std::sort(pairs.begin(), pairs.end(), PairCompare(this));
         
-        // Main chain starts with the first pair
+        // Step 3: Create main and pend chains
         Container main;
-        main.push_back(pairs[0].first);
-        main.push_back(pairs[0].second);
+        Container pend;
         
-        // Add all second elements to main chain
-        std::vector<ValueType> pend;
-        for (size_t i = 1; i < pairs.size(); i++) {
-            pend.push_back(pairs[i].first);  // Store smaller elements for insertion
-            main.push_back(pairs[i].second); // Add larger elements to the sorted chain
+        // Add first element of first pair to main (smallest element)
+        main.push_back(pairs[0].first);
+        
+        // Add all larger elements to main (b values)
+        for (const std::pair<ValueType, ValueType>& p : pairs) {
+            main.push_back(p.second);
         }
         
-        // Add odd element to pend if it exists
-        if (hasOddElement) {
+        // Add all remaining smaller elements to pend (a values except first one)
+        for (size_t i = 1; i < pairs.size(); i++) {
+            pend.push_back(pairs[i].first);
+        }
+        
+        // Add odd element to pend if exists
+        if (hasOdd) {
             pend.push_back(oddElement);
         }
         
-        // Generate Jacobsthal insertion sequence
-        std::vector<size_t> jacobsthalIndices = getJacobsthalSequence(pend.size());
+        if (debug_) {
+            printContainer(main, "Main chain");
+            printContainer(pend, "Pend chain");
+        }
         
-        // Insert pending elements using binary search and Jacobsthal numbers
-        std::vector<size_t> insertionOrder;
-        for (size_t i = 0; i < jacobsthalIndices.size(); i++) {
-            size_t idx = jacobsthalIndices[i] - 1;
-            if (idx < pend.size() && std::find(insertionOrder.begin(), insertionOrder.end(), idx) == insertionOrder.end()) {
-                insertionOrder.push_back(idx);
-            }
-            
-            // Add indices between current and previous Jacobsthal number
-            size_t prev = (i == 0) ? 0 : jacobsthalIndices[i-1];
-            for (size_t j = idx - 1; j >= prev && j < pend.size(); j--) {
-                if (std::find(insertionOrder.begin(), insertionOrder.end(), j) == insertionOrder.end()) {
-                    insertionOrder.push_back(j);
+        // Step 4: Insert pend elements into main using Jacobsthal order
+        std::vector<size_t> insertOrder;
+        
+        // Calculate insertion order based on Jacobsthal numbers
+        std::vector<size_t> jacobsthalNumbers = getJacobsthalSequence(pend.size() + 1);
+        
+        size_t prevJac = 1; // Start from 1 (first element already processed)
+        for (size_t jac : jacobsthalNumbers) {
+            if (jac <= pend.size()) {
+                insertOrder.push_back(jac);
+                
+                // Add indices between current and previous Jacobsthal number in reverse
+                for (size_t i = jac - 1; i > prevJac; i--) {
+                    insertOrder.push_back(i);
                 }
-                if (j == 0) break;  // Avoid underflow
+                
+                prevJac = jac;
             }
         }
         
-        // Add any remaining indices
-        for (size_t i = 0; i < pend.size(); i++) {
-            if (std::find(insertionOrder.begin(), insertionOrder.end(), i) == insertionOrder.end()) {
-                insertionOrder.push_back(i);
-            }
+        // Add any remaining indices in reverse
+        for (size_t i = pend.size(); i > prevJac; i--) {
+            insertOrder.push_back(i);
         }
         
-        // Insert elements from pend into the main
-        for (size_t idx : insertionOrder) {
-            if (idx >= pend.size()) continue;
-            
-            ValueType value = pend[idx];
-            typename Container::iterator pos = std::lower_bound(main.begin(), main.end(), value);
-            main.insert(pos, value);
+        if (debug_) {
+            std::cout << "Insertion order: ";
+            for (size_t idx : insertOrder) std::cout << idx << " ";
+            std::cout << std::endl;
+        }
+        
+        // Step 5: Perform insertions according to calculated order
+        for (size_t idx : insertOrder) {
+            if (idx > 0 && idx <= pend.size()) {
+                size_t pendIdx = idx - 1; // Convert to 0-based index
+                ValueType val = pend[pendIdx];
+                
+                // Find insertion position using binary search with bound
+                size_t bound = std::min(main.size(), idx + 1); // Bound according to the algorithm
+                
+                typename Container::iterator boundIt = main.begin() + bound;
+                typename Container::iterator pos = std::lower_bound(main.begin(), boundIt, val, ValueCompare(this));
+                
+                size_t insertPos = std::distance(main.begin(), pos);
+                main.insert(pos, val);
+                
+                if (debug_) {
+                    std::cout << "Inserted " << val << " at position " << insertPos << std::endl;
+                    printContainer(main, "Main after insertion");
+                }
+            }
         }
         
         // Update the original container
         container = main;
-    }
-    
-    // Complete Ford-Johnson sort
-    void sort(Container& container) {
-        if (container.size() <= 1) return;
-
-        // Phase 1: Sort pairs
-        sortPairs(container);
-
-        // Display after pair sorting
-        // std::cout << "After pair sort: ";
-        // for (auto num : container) std::cout << num << " ";
-        // std::cout << std::endl;
-
-        // Phase 2: Merge insertion with Jacobsthal numbers
-        mergeInsert(container);
+        
+        if (debug_) {
+            printContainer(container, "Sorted array");
+            std::cout << "Total comparisons: " << comparisons_ << std::endl;
+        }
     }
 };
-
-template <typename Container>
-std::ostream& operator<<(std::ostream& os, const PmergeMe<Container>& obj) {
-    for (auto num : obj.vec_) {
-        os << num << " ";
-    }
-    return os;
-}
 
 #endif
