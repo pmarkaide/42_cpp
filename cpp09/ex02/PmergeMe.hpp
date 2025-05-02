@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/02 13:24:54 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:17:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,15 +223,23 @@ private:
         std::vector<size_t> insertOrder;
         std::vector<size_t> jacobsthalNumbers = getJacobsthalSequence(pairs.size());
         
+        // Create a vector to track which elements have been inserted
+        std::vector<bool> inserted(pairs.size() + 1, false);
+        inserted[1] = true; // First element is already in the result
+        
         size_t prevJac = 1; // Start from 1 (first element already processed)
         for (size_t jac : jacobsthalNumbers) {
             if (jac <= pairs.size()) {
                 // Add the Jacobsthal number
                 insertOrder.push_back(jac);
+                inserted[jac] = true;
                 
                 // Add indices between current and previous Jacobsthal in reverse
                 for (size_t i = jac - 1; i > prevJac; --i) {
-                    insertOrder.push_back(i);
+                    if (!inserted[i]) {
+                        insertOrder.push_back(i);
+                        inserted[i] = true;
+                    }
                 }
                 
                 prevJac = jac;
@@ -240,7 +248,10 @@ private:
         
         // Add any remaining indices in reverse
         for (size_t i = pairs.size(); i > prevJac; --i) {
-            insertOrder.push_back(i);
+            if (!inserted[i]) {
+                insertOrder.push_back(i);
+                inserted[i] = true;
+            }
         }
         
         if (debug_) {
@@ -250,7 +261,6 @@ private:
         }
         
         // Perform insertions in Jacobsthal order
-        size_t pendChunkPos = 0;
         for (size_t idx : insertOrder) {
             if (idx > 1 && idx <= pairs.size()) {
                 size_t chunkIdx = idx - 2; // Adjust for 0-based indexing and skipping first pair
@@ -266,46 +276,80 @@ private:
                 
                 if (chunkToInsert.empty()) continue;
                 
-                // Calculate bound for binary search
-                // The bound is (idx)*chunkSize elements, which includes
-                // b1 and all a chunks up to idx
-                size_t bound = std::min(result.size(), (idx) * chunkSize);
-                
-                // Find the insertion position based on the first element in the chunk
-                // But ensure we only insert at chunk boundaries
-                auto boundIt = result.begin() + bound;
-                auto pos = std::lower_bound(result.begin(), boundIt, chunkToInsert.front(), 
-                          [this](const ValueType& a, const ValueType& b) { return this->compare(a, b); });
-                
-                // Adjust to ensure we're at a chunk boundary
-                size_t distance = std::distance(result.begin(), pos);
-                size_t chunkBoundary = (distance / chunkSize) * chunkSize;
-                pos = result.begin() + chunkBoundary;
-                
-                // If the insertion point is the same as the bound, we should insert at the end of the bound
-                if (pos == boundIt) {
-                    // Insert at the end of the current bound
-                    result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
+                // For Ford-Johnson sort, the binary search bounds need to be carefully calculated
+                // We need to search only in the already sorted portion of the array
+                if (chunkSize == 1) {
+                    // For single elements in Ford-Johnson algorithm
+                    ValueType val = chunkToInsert.front();
+                    
+                    // Get the group number for binary search bounds
+                    // The bound should be the mainChain + all elements inserted before current index
+                    size_t bound = 0;
+                    
+                    // Count mainchain elements: b1 + all a's up to this point
+                    bound = 1; // b1 element (first element)
+                    bound += idx - 1; // a elements up to current index
+                    
+                    // Count previously inserted b elements
+                    size_t previousB = 0;
+                    for (size_t j = 0; j < insertOrder.size(); ++j) {
+                        if (insertOrder[j] == idx) break;
+                        if (insertOrder[j] > 1) previousB++;
+                    }
+                    
+                    bound += previousB;
+                    bound = std::min(bound, result.size());
+                    
+                    if (debug_) {
+                        std::cout << "Binary search bound for idx " << idx << ": " << bound << std::endl;
+                    }
+                    
+                    // Binary search within the proper bounds
+                    auto begin = result.begin();
+                    auto end = begin + bound;
+                    
+                    auto pos = std::lower_bound(begin, end, val,
+                              [this](const ValueType& a, const ValueType& b) {
+                                  return this->compare(a, b);
+                              });
+                    
+                    size_t insertPos = std::distance(result.begin(), pos);
+                    result.insert(pos, val);
+                    
+                    if (debug_) {
+                        std::cout << "Inserted element " << val << " at position " 
+                                  << insertPos << " (insertion order idx: " << idx << ")" << std::endl;
+                    }
                 } else {
-                    // Compare with the chunk at the position
-                    auto nextChunkPos = pos + chunkSize;
-                    if (nextChunkPos <= boundIt && 
-                        this->compare(chunkToInsert.front(), *pos)) {
-                        // Insert before this chunk
-                        result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
-                    } else {
-                        // Insert after this chunk
-                        pos += chunkSize;
-                        result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
+                    // For larger chunks, use chunk-based comparison
+                    ValueType pendChunkRightmost = chunkToInsert.back();
+                    size_t insertPos = 0;
+                    
+                    // Search for insertion position by comparing chunk boundaries
+                    for (size_t i = 0; i < result.size(); i += chunkSize) {
+                        size_t end = std::min(i + chunkSize, result.size());
+                        
+                        if (end > 0) {
+                            // Get the rightmost element of the current chunk
+                            ValueType rightMost = result[end - 1];
+                            
+                            if (this->compare(rightMost, pendChunkRightmost)) {
+                                insertPos = end;
+                                continue;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Insert the chunk at the determined position
+                    result.insert(result.begin() + insertPos, chunkToInsert.begin(), chunkToInsert.end());
+                    
+                    if (debug_) {
+                        std::cout << "Inserted chunk at position " << insertPos
+                                  << " (insertion order idx: " << idx << ")" << std::endl;
                     }
                 }
-                
-                if (debug_) {
-                    std::cout << "Inserted chunk at position " 
-                              << chunkBoundary << std::endl;
-                }
-                
-                pendChunkPos += chunkSize;
             }
         }
         
