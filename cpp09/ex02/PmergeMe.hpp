@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/02 13:02:16 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:24:54 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,27 +258,51 @@ private:
                 // Calculate position in pend for the current chunk
                 size_t pendPos = chunkIdx * chunkSize;
                 
-                // For each element in the chunk
+                // Create a temporary container for the chunk we want to insert
+                Container chunkToInsert;
                 for (size_t offset = 0; offset < chunkSize && pendPos + offset < pend.size(); ++offset) {
-                    ValueType val = pend[pendPos + offset];
-                    
-                    // Calculate bound for binary search
-                    // The bound is (idx+1)*chunkSize elements, which includes
-                    // b1 and all a chunks up to idx, plus already inserted elements
-                    size_t bound = std::min(result.size(), (idx + 1) * chunkSize + pendChunkPos);
-                    
-                    // Find insertion position
-                    auto boundIt = result.begin() + bound;
-                    auto pos = std::lower_bound(result.begin(), boundIt, val, 
-                               [this](const ValueType& a, const ValueType& b) { return this->compare(a, b); });
-                    
-                    // Insert the element
-                    result.insert(pos, val);
-                    
-                    if (debug_) {
-                        std::cout << "Inserted " << val << " at position " 
-                                  << std::distance(result.begin(), pos) << std::endl;
+                    chunkToInsert.push_back(pend[pendPos + offset]);
+                }
+                
+                if (chunkToInsert.empty()) continue;
+                
+                // Calculate bound for binary search
+                // The bound is (idx)*chunkSize elements, which includes
+                // b1 and all a chunks up to idx
+                size_t bound = std::min(result.size(), (idx) * chunkSize);
+                
+                // Find the insertion position based on the first element in the chunk
+                // But ensure we only insert at chunk boundaries
+                auto boundIt = result.begin() + bound;
+                auto pos = std::lower_bound(result.begin(), boundIt, chunkToInsert.front(), 
+                          [this](const ValueType& a, const ValueType& b) { return this->compare(a, b); });
+                
+                // Adjust to ensure we're at a chunk boundary
+                size_t distance = std::distance(result.begin(), pos);
+                size_t chunkBoundary = (distance / chunkSize) * chunkSize;
+                pos = result.begin() + chunkBoundary;
+                
+                // If the insertion point is the same as the bound, we should insert at the end of the bound
+                if (pos == boundIt) {
+                    // Insert at the end of the current bound
+                    result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
+                } else {
+                    // Compare with the chunk at the position
+                    auto nextChunkPos = pos + chunkSize;
+                    if (nextChunkPos <= boundIt && 
+                        this->compare(chunkToInsert.front(), *pos)) {
+                        // Insert before this chunk
+                        result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
+                    } else {
+                        // Insert after this chunk
+                        pos += chunkSize;
+                        result.insert(pos, chunkToInsert.begin(), chunkToInsert.end());
                     }
+                }
+                
+                if (debug_) {
+                    std::cout << "Inserted chunk at position " 
+                              << chunkBoundary << std::endl;
                 }
                 
                 pendChunkPos += chunkSize;
@@ -358,6 +382,9 @@ public:
     }
     
     // Sort entry point
+
+	typedef std::vector<ValueType> Chunk;
+
     void sort(Container& container) {
         comparisons_ = 0; // Reset comparison counter
         
