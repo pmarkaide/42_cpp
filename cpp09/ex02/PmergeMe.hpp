@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/02 11:23:14 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:02:16 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 #include <climits>
 #include <algorithm>
 #include <cmath>
+#include <list>
 
-// Efficient Jacobsthal number calculation
+// Jacobsthal number calculation
 inline size_t getJacobsthalNumber(size_t n) {
     // Formula: (2^(n+1) - (-1)^n) / 3
     double pow2 = std::pow(2, n + 1);
@@ -31,7 +32,7 @@ inline size_t getJacobsthalNumber(size_t n) {
     return static_cast<size_t>((pow2 - powNeg1) / 3);
 }
 
-// Get Jacobsthal sequence up to a certain limit
+// Generate Jacobsthal sequence up to limit
 inline std::vector<size_t> getJacobsthalSequence(size_t limit) {
     std::vector<size_t> sequence;
     size_t n = 3; // Start from 3rd Jacobsthal number (3)
@@ -53,15 +54,15 @@ private:
     int comparisons_; // Count comparisons for testing
     
     typedef typename Container::value_type ValueType;
+    typedef typename Container::iterator Iterator;
     
+    // Check if input string has only digits
     bool isValidInput(const std::string& input) {
-        // Check if input string has only digits
         if (std::any_of(input.begin(), input.end(), [](char c) { return !std::isdigit(c); })) {
             return false;
         }
         
         try {
-            // Use stol with exception handling for out-of-range values
             long num = std::stol(input);
             return (num > 0 && num <= INT_MAX);
         } catch (const std::exception&) {
@@ -69,45 +70,247 @@ private:
         }
     }
     
-    // Print container with optional markers
-    void printContainer(const Container& cont, const std::string& label) {
+    // Print container for debugging
+    void printContainer(const Container& cont, const std::string& label, size_t chunkSize = 1) {
         if (!debug_) return;
-        
+
         std::cout << label << ": ";
+        size_t count = 0;
         for (const ValueType& val : cont) {
             std::cout << val << " ";
+            count++;
+            if (count % chunkSize == 0 && count != cont.size()) {
+                std::cout << "| ";
+            }
         }
         std::cout << std::endl;
     }
     
-    // Comparison function that counts comparisons
+    // Comparison function with counter
     bool compare(const ValueType& a, const ValueType& b) {
         comparisons_++;
         return a < b;
     }
     
-    // Custom comparison for pairs
-    struct PairCompare {
-        PmergeMe* sorter;
+    // Recursive Ford-Johnson sort implementation
+    void fordJohnsonSort(Container& container, size_t chunkSize = 1) {
+        if (container.size() <= 1) return;
         
-        PairCompare(PmergeMe* s) : sorter(s) {}
-        
-        bool operator()(const std::pair<ValueType, ValueType>& p1, 
-                         const std::pair<ValueType, ValueType>& p2) const {
-            return sorter->compare(p1.second, p2.second);
+        if (debug_) {
+            std::cout << "\n--- Starting recursion with chunk size: " << chunkSize << " ---\n";
+            printContainer(container, "Current array", chunkSize);
         }
-    };
-    
-    // Custom comparator for binary search
-    struct ValueCompare {
-        PmergeMe* sorter;
         
-        ValueCompare(PmergeMe* s) : sorter(s) {}
-        
-        bool operator()(const ValueType& a, const ValueType& b) const {
-            return sorter->compare(a, b);
+        // Base case: if we can't form pairs of chunks anymore
+        if (container.size() < 2 * chunkSize) {
+            if (debug_) {
+                std::cout << "Reached base case, returning\n";
+            }
+            return;
         }
-    };
+        
+        // Step 1: Form pairs of chunks and sort them
+        std::vector<std::pair<Iterator, Iterator>> pairs;
+        bool hasOdd = false;
+        Iterator oddStart;
+        
+        // Group elements into pairs of chunks
+        for (Iterator it = container.begin(); it != container.end(); ) {
+            Iterator chunkStart1 = it;
+            
+            // Advance to end of first chunk
+            for (size_t i = 0; i < chunkSize && it != container.end(); ++i) {
+                ++it;
+            }
+            
+            // Check if we have room for a second chunk
+            if (std::distance(it, container.end()) >= static_cast<long>(chunkSize)) {
+                Iterator chunkStart2 = it;
+                
+                // Advance to end of second chunk
+                for (size_t i = 0; i < chunkSize && it != container.end(); ++i) {
+                    ++it;
+                }
+                
+                pairs.push_back(std::make_pair(chunkStart1, chunkStart2));
+            }
+            else {
+                // We have an odd chunk
+                hasOdd = true;
+                oddStart = chunkStart1;
+                break;
+            }
+        }
+        
+        if (debug_) {
+            std::cout << "Formed " << pairs.size() << " pairs of chunks\n";
+            if (hasOdd) std::cout << "Has odd chunk: Yes\n";
+        }
+        
+        // Sort each pair by comparing the largest elements in each chunk
+        for (auto& pair : pairs) {
+            Iterator max1 = std::max_element(pair.first, 
+                std::next(pair.first, std::min(static_cast<size_t>(std::distance(pair.first, container.end())), chunkSize)));
+            Iterator max2 = std::max_element(pair.second, 
+                std::next(pair.second, std::min(static_cast<size_t>(std::distance(pair.second, container.end())), chunkSize)));
+                
+            if (compare(*max2, *max1)) {
+                // Swap the chunks
+                for (size_t i = 0; i < chunkSize; ++i) {
+                    if (std::next(pair.first, i) != container.end() && 
+                        std::next(pair.second, i) != container.end()) {
+                        std::iter_swap(std::next(pair.first, i), std::next(pair.second, i));
+                    }
+                }
+            }
+        }
+        
+        if (debug_) {
+            std::cout << "After sorting pairs:\n";
+            printContainer(container, "Updated array", chunkSize);
+        }
+        
+        // Recursive call with double chunk size
+        fordJohnsonSort(container, chunkSize * 2);
+        
+        if (debug_) {
+            std::cout << "\n--- Returned to chunk size: " << chunkSize << " ---\n";
+            printContainer(container, "Array after recursion", chunkSize);
+        }
+        
+        // Now handle merge-insertion for current chunk size
+        Container result;
+        Container pend;
+        
+        // Build the main chain: first b1 chunk, then all a chunks
+        auto it = container.begin();
+        
+        // Add first b chunk (first chunk of first pair)
+        for (size_t i = 0; i < chunkSize && it != container.end(); ++i) {
+            result.push_back(*it++);
+        }
+        
+        // Add all a chunks (second chunks of all pairs)
+        for (size_t pairIdx = 0; pairIdx < pairs.size(); ++pairIdx) {
+            Iterator aStart = pairs[pairIdx].second;
+            for (size_t i = 0; i < chunkSize && aStart != container.end(); ++i) {
+                result.push_back(*aStart++);
+            }
+        }
+        
+        // Build the pend chain: all remaining b chunks (except b1)
+        for (size_t pairIdx = 1; pairIdx < pairs.size(); ++pairIdx) {
+            Iterator bStart = pairs[pairIdx].first;
+            for (size_t i = 0; i < chunkSize && bStart != container.end(); ++i) {
+                pend.push_back(*bStart++);
+            }
+        }
+        
+        // Add odd chunk to pend if exists
+        if (hasOdd) {
+            Iterator it = oddStart;
+            for (size_t i = 0; i < chunkSize && it != container.end(); ++i) {
+                pend.push_back(*it++);
+            }
+        }
+        
+        if (debug_) {
+            printContainer(result, "Main chain", chunkSize);
+            printContainer(pend, "Pend chain", chunkSize);
+        }
+        
+        // Calculate Jacobsthal-based insertion order
+        std::vector<size_t> insertOrder;
+        std::vector<size_t> jacobsthalNumbers = getJacobsthalSequence(pairs.size());
+        
+        size_t prevJac = 1; // Start from 1 (first element already processed)
+        for (size_t jac : jacobsthalNumbers) {
+            if (jac <= pairs.size()) {
+                // Add the Jacobsthal number
+                insertOrder.push_back(jac);
+                
+                // Add indices between current and previous Jacobsthal in reverse
+                for (size_t i = jac - 1; i > prevJac; --i) {
+                    insertOrder.push_back(i);
+                }
+                
+                prevJac = jac;
+            }
+        }
+        
+        // Add any remaining indices in reverse
+        for (size_t i = pairs.size(); i > prevJac; --i) {
+            insertOrder.push_back(i);
+        }
+        
+        if (debug_) {
+            std::cout << "Insertion order: ";
+            for (size_t idx : insertOrder) std::cout << idx << " ";
+            std::cout << std::endl;
+        }
+        
+        // Perform insertions in Jacobsthal order
+        size_t pendChunkPos = 0;
+        for (size_t idx : insertOrder) {
+            if (idx > 1 && idx <= pairs.size()) {
+                size_t chunkIdx = idx - 2; // Adjust for 0-based indexing and skipping first pair
+                
+                // Calculate position in pend for the current chunk
+                size_t pendPos = chunkIdx * chunkSize;
+                
+                // For each element in the chunk
+                for (size_t offset = 0; offset < chunkSize && pendPos + offset < pend.size(); ++offset) {
+                    ValueType val = pend[pendPos + offset];
+                    
+                    // Calculate bound for binary search
+                    // The bound is (idx+1)*chunkSize elements, which includes
+                    // b1 and all a chunks up to idx, plus already inserted elements
+                    size_t bound = std::min(result.size(), (idx + 1) * chunkSize + pendChunkPos);
+                    
+                    // Find insertion position
+                    auto boundIt = result.begin() + bound;
+                    auto pos = std::lower_bound(result.begin(), boundIt, val, 
+                               [this](const ValueType& a, const ValueType& b) { return this->compare(a, b); });
+                    
+                    // Insert the element
+                    result.insert(pos, val);
+                    
+                    if (debug_) {
+                        std::cout << "Inserted " << val << " at position " 
+                                  << std::distance(result.begin(), pos) << std::endl;
+                    }
+                }
+                
+                pendChunkPos += chunkSize;
+            }
+        }
+        
+        // Handle odd chunk if it exists
+        if (hasOdd) {
+            // Find position for odd chunk - use binary insertion for each element
+            for (size_t i = pairs.size() * chunkSize; i < pend.size(); ++i) {
+                ValueType val = pend[i];
+                
+                // Use binary search for insertion position
+                auto pos = std::lower_bound(result.begin(), result.end(), val,
+                           [this](const ValueType& a, const ValueType& b) { return this->compare(a, b); });
+                
+                result.insert(pos, val);
+                
+                if (debug_) {
+                    std::cout << "Inserted odd element " << val << " at position " 
+                              << std::distance(result.begin(), pos) << std::endl;
+                }
+            }
+        }
+        
+        // Update the original container
+        container = result;
+        
+        if (debug_) {
+            printContainer(container, "Sorted at current level", chunkSize);
+        }
+    }
     
 public:
     Container vec_;
@@ -119,6 +322,7 @@ public:
     void setDebug(bool debug) { debug_ = debug; }
     int getComparisons() const { return comparisons_; }
     
+    // Parse command-line arguments
     bool parseArguments(int argc, char **argv) {
         if (argc < 2) {
             return false;
@@ -144,6 +348,7 @@ public:
         return true;
     }
     
+    // Display container
     void display(const std::string& prefix) const {
         std::cout << prefix;
         for (const ValueType& num : vec_) {
@@ -152,126 +357,16 @@ public:
         std::cout << std::endl;
     }
     
-    // Ford-Johnson / Merge-Insert Sort
+    // Sort entry point
     void sort(Container& container) {
         comparisons_ = 0; // Reset comparison counter
         
         if (container.size() <= 1) return; // Already sorted
         
-        if (debug_) {
-            printContainer(container, "Original array");
-        }
-        
-        // Step 1: Make pairs and sort them
-        bool hasOdd = (container.size() % 2 == 1);
-        ValueType oddElement;
-        
-        if (hasOdd) {
-            oddElement = container.back();
-            container.pop_back();
-        }
-        
-        // Create sorted pairs
-        std::vector<std::pair<ValueType, ValueType>> pairs;
-        for (size_t i = 0; i < container.size(); i += 2) {
-            ValueType a = container[i];
-            ValueType b = container[i + 1];
-            
-            if (compare(b, a)) {
-                std::swap(a, b);
-            }
-            
-            pairs.push_back(std::make_pair(a, b)); // a is smaller, b is larger
-        }
-        
-        // Step 2: Sort pairs by their larger element (b values)
-        std::sort(pairs.begin(), pairs.end(), PairCompare(this));
-        
-        // Step 3: Create main and pend chains
-        Container main;
-        Container pend;
-        
-        // Add first element of first pair to main (smallest element)
-        main.push_back(pairs[0].first);
-        
-        // Add all larger elements to main (b values)
-        for (const std::pair<ValueType, ValueType>& p : pairs) {
-            main.push_back(p.second);
-        }
-        
-        // Add all remaining smaller elements to pend (a values except first one)
-        for (size_t i = 1; i < pairs.size(); i++) {
-            pend.push_back(pairs[i].first);
-        }
-        
-        // Add odd element to pend if exists
-        if (hasOdd) {
-            pend.push_back(oddElement);
-        }
+        // Start the Ford-Johnson / Merge-Insert Sort with chunk size 1
+        fordJohnsonSort(container);
         
         if (debug_) {
-            printContainer(main, "Main chain");
-            printContainer(pend, "Pend chain");
-        }
-        
-        // Step 4: Insert pend elements into main using Jacobsthal order
-        std::vector<size_t> insertOrder;
-        
-        // Calculate insertion order based on Jacobsthal numbers
-        std::vector<size_t> jacobsthalNumbers = getJacobsthalSequence(pend.size() + 1);
-        
-        size_t prevJac = 1; // Start from 1 (first element already processed)
-        for (size_t jac : jacobsthalNumbers) {
-            if (jac <= pend.size()) {
-                insertOrder.push_back(jac);
-                
-                // Add indices between current and previous Jacobsthal number in reverse
-                for (size_t i = jac - 1; i > prevJac; i--) {
-                    insertOrder.push_back(i);
-                }
-                
-                prevJac = jac;
-            }
-        }
-        
-        // Add any remaining indices in reverse
-        for (size_t i = pend.size(); i > prevJac; i--) {
-            insertOrder.push_back(i);
-        }
-        
-        if (debug_) {
-            std::cout << "Insertion order: ";
-            for (size_t idx : insertOrder) std::cout << idx << " ";
-            std::cout << std::endl;
-        }
-        
-        // Step 5: Perform insertions according to calculated order
-        for (size_t idx : insertOrder) {
-            if (idx > 0 && idx <= pend.size()) {
-                size_t pendIdx = idx - 1; // Convert to 0-based index
-                ValueType val = pend[pendIdx];
-                
-                // Find insertion position using binary search with bound
-                size_t bound = std::min(main.size(), idx + 1); // Bound according to the algorithm
-                
-                typename Container::iterator boundIt = main.begin() + bound;
-                typename Container::iterator pos = std::lower_bound(main.begin(), boundIt, val, ValueCompare(this));
-                
-                size_t insertPos = std::distance(main.begin(), pos);
-                main.insert(pos, val);
-                
-                if (debug_) {
-                    std::cout << "Inserted " << val << " at position " << insertPos << std::endl;
-                    printContainer(main, "Main after insertion");
-                }
-            }
-        }
-        
-        // Update the original container
-        container = main;
-        
-        if (debug_) {
-            printContainer(container, "Sorted array");
             std::cout << "Total comparisons: " << comparisons_ << std::endl;
         }
     }
