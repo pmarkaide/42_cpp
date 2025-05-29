@@ -1,0 +1,10 @@
+date | value
+date | value | extra
+date  value
+date - value
+date* value
+date|value
+|value
+date|
+|
+
