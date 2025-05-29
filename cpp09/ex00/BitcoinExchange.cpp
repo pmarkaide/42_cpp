@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:12:16 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/05/20 19:45:20 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:33:52 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool BitcoinExchange::parseDatabase(const std::string& filename) {
     }
     
     std::string line;
-    // Skip header line
+    // Skip header line - database format is trusted
     std::getline(file, line);
     
     while (std::getline(file, line)) {
@@ -95,37 +95,47 @@ bool BitcoinExchange::parseDatabase(const std::string& filename) {
     return !database_.empty();
 }
 
-// Validate date format and check if it's a valid date using chrono
+// Validate date format with robust manual validation
 bool BitcoinExchange::isValidDate(const std::string& date) const {
-    // Check format: YYYY-MM-DD
+    // Quick format check: YYYY-MM-DD (length = 10)
     if (date.length() != 10 || date[4] != '-' || date[7] != '-') {
         return false;
     }
     
     try {
-        // Extract year, month, and day and check if they're numeric
+        // Manual parsing of date components
         std::string yearStr = date.substr(0, 4);
         std::string monthStr = date.substr(5, 2);
         std::string dayStr = date.substr(8, 2);
         
-        if (!isNumeric(yearStr) || !isNumeric(monthStr) || !isNumeric(dayStr)) {
+        // Check if all components are numeric
+        if (!std::all_of(yearStr.begin(), yearStr.end(), ::isdigit) ||
+            !std::all_of(monthStr.begin(), monthStr.end(), ::isdigit) ||
+            !std::all_of(dayStr.begin(), dayStr.end(), ::isdigit)) {
             return false;
         }
         
-        std::istringstream ss(date);
-        std::tm t = {};
-        ss >> std::get_time(&t, "%Y-%m-%d");
+        // Convert to integers
+        int year = std::stoi(yearStr);
+        int month = std::stoi(monthStr);
+        int day = std::stoi(dayStr);
         
-        if (ss.fail()) {
-            return false;
+        // Validate ranges
+        if (year < 1000 || year > 9999) return false;
+        if (month < 1 || month > 12) return false;
+        if (day < 1 || day > 31) return false;
+        
+        // Days per month validation
+        static const int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int maxDays = daysInMonth[month - 1];
+        
+        // Handle leap year for February
+        if (month == 2) {
+            bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+            if (isLeap) maxDays = 29;
         }
         
-        // Convert back to string to verify normalization preserved the date
-        // This implicitly checks for leap years and valid day/month combinations
-        char buf[11];
-        std::strftime(buf, sizeof(buf), "%Y-%m-%d", &t);
-        
-        return date == std::string(buf);
+        return day <= maxDays;
     }
     catch (const std::exception&) {
         return false;
@@ -168,7 +178,7 @@ std::string BitcoinExchange::findClosestDate(const std::string& date) const {
     return it->first;
 }
 
-// Process the input file
+// Process the input file with strict validation
 bool BitcoinExchange::processInputFile(const std::string& inputFile) {
     std::ifstream file(inputFile);
     
@@ -186,9 +196,13 @@ bool BitcoinExchange::processInputFile(const std::string& inputFile) {
     bool isFirstLine = true;
     
     while (std::getline(file, line)) {
-        // Skip header line
+        // Validate header line
         if (isFirstLine) {
             isFirstLine = false;
+            if (line != "date | value") {
+                std::cerr << "Error: bad input => " << line << std::endl;
+                continue;
+            }
             continue;
         }
         
@@ -197,60 +211,70 @@ bool BitcoinExchange::processInputFile(const std::string& inputFile) {
             continue;
         }
         
-        // Find the pipe separator
+        // Find pipe separator - must be exactly one
         size_t pipePos = line.find('|');
         
-        // Process valid format: "date | value"
-        if (pipePos != std::string::npos) {
-            std::string dateStr = trim(line.substr(0, pipePos));
-            std::string valueStr = trim(line.substr(pipePos + 1));
-            
-            // Validate date
-            if (!isValidDate(dateStr)) {
-                std::cerr << "Error: bad input => " << line << std::endl;
-                continue;
-            }
-            
-            // Validate value
-            float value;
-            if (valueStr.empty()) {
-                std::cerr << "Error: missing value => " << line << std::endl;
-                continue;
-            }
-            
-            if (!isNumeric(valueStr)) {
-                std::cerr << "Error: not a number => " << valueStr << std::endl;
-                continue;
-            }
-            
-            value = std::stof(valueStr);
-            
-            if (value < 0) {
-                std::cerr << "Error: not a positive number." << std::endl;
-                continue;
-            }
-            
-            if (value > 1000) {
-                std::cerr << "Error: too large a number." << std::endl;
-                continue;
-            }
-            
-            // Find closest date in database
-            std::string closestDate = findClosestDate(dateStr);
-            if (closestDate.empty()) {
-                std::cerr << "Error: no data available for date " << dateStr << std::endl;
-                continue;
-            }
-            
-            // Calculate and output result
-            float exchangeRate = database_[closestDate];
-            float result = value * exchangeRate;
-            
-            std::cout << dateStr << " => " << value << " = " << result << std::endl;
-        }
-        else {
+        // Check for invalid format cases
+        if (pipePos == std::string::npos) {
+            // No pipe found
             std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
         }
+        
+        // Check for multiple pipes
+        if (line.find('|', pipePos + 1) != std::string::npos) {
+            // Multiple pipes found
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+        
+        // Split into exactly 2 parts
+        std::string dateStr = trim(line.substr(0, pipePos));
+        std::string valueStr = trim(line.substr(pipePos + 1));
+        
+        // Check for empty parts
+        if (dateStr.empty() || valueStr.empty()) {
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+        
+        // Validate date
+        if (!isValidDate(dateStr)) {
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+        
+        // Validate value
+        float value;
+        if (!isNumeric(valueStr)) {
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
+        }
+        
+        value = std::stof(valueStr);
+        
+        if (value < 0) {
+            std::cerr << "Error: not a positive number." << std::endl;
+            continue;
+        }
+        
+        if (value > 1000) {
+            std::cerr << "Error: too large a number." << std::endl;
+            continue;
+        }
+        
+        // Find closest date in database
+        std::string closestDate = findClosestDate(dateStr);
+        if (closestDate.empty()) {
+            std::cerr << "Error: no data available for date " << dateStr << std::endl;
+            continue;
+        }
+        
+        // Calculate and output result
+        float exchangeRate = database_[closestDate];
+        float result = value * exchangeRate;
+        
+        std::cout << dateStr << " => " << value << " = " << result << std::endl;
     }
     
     file.close();
