@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/06/02 21:55:20 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/06/02 22:02:47 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,49 +70,61 @@ std::vector<int> PmergeMe::fordJohnsonSort(std::vector<int> arr) {
         return arr;
     }
     
-    std::vector<int> main, pend;
+    std::vector<std::pair<int, int> > pairs;
     bool hasOdd = arr.size() % 2;
     int oddElement = hasOdd ? arr.back() : -1;
     
     for (size_t i = 0; i < arr.size() - hasOdd; i += 2) {
         if (arr[i] > arr[i + 1]) {
-            main.push_back(arr[i]);
-            pend.push_back(arr[i + 1]);
+            pairs.push_back(std::make_pair(arr[i], arr[i + 1]));
         } else {
-            main.push_back(arr[i + 1]);
-            pend.push_back(arr[i]);
+            pairs.push_back(std::make_pair(arr[i + 1], arr[i]));
         }
+    }
+    
+    std::vector<int> main;
+    for (size_t i = 0; i < pairs.size(); i++) {
+        main.push_back(pairs[i].first);
     }
     
     main = fordJohnsonSort(main);
     
-    std::vector<int> result;
-    if (!pend.empty()) {
-        result.push_back(pend[0]);
-    }
-    result.insert(result.end(), main.begin(), main.end());
-    
-    if (pend.size() > 1) {
-        std::vector<int> jacobsthal = generateJacobsthal(pend.size());
-        std::vector<bool> inserted(pend.size(), false);
-        inserted[0] = true;
-        
-        for (size_t i = 1; i < jacobsthal.size() && jacobsthal[i] <= static_cast<int>(pend.size()); i++) {
-            int groupEnd = jacobsthal[i] - 1;
-            int groupStart = (i > 1) ? jacobsthal[i - 1] : 1;
-            
-            for (int j = groupEnd; j >= groupStart && j >= 1; j--) {
-                if (j < static_cast<int>(pend.size()) && !inserted[j]) {
-                    size_t limit = result.size();
-                    insertWithBinarySearch(result, pend[j], limit);
-                    inserted[j] = true;
-                }
+    std::vector<int> pend;
+    for (size_t i = 0; i < main.size(); i++) {
+        for (size_t j = 0; j < pairs.size(); j++) {
+            if (pairs[j].first == main[i]) {
+                pend.push_back(pairs[j].second);
+                break;
             }
         }
+    }
+    
+    std::vector<int> result = main;
+    
+    if (!pend.empty()) {
+        insertWithBinarySearch(result, pend[0], result.size());
         
-        for (size_t i = 1; i < pend.size(); i++) {
-            if (!inserted[i]) {
-                insertWithBinarySearch(result, pend[i], result.size());
+        if (pend.size() > 1) {
+            std::vector<int> jacobsthal = generateJacobsthal(pend.size());
+            std::vector<bool> inserted(pend.size(), false);
+            inserted[0] = true;
+            
+            for (size_t i = 1; i < jacobsthal.size() && jacobsthal[i] <= static_cast<int>(pend.size()); i++) {
+                int groupEnd = jacobsthal[i] - 1;
+                int groupStart = (i > 1) ? jacobsthal[i - 1] : 1;
+                
+                for (int j = groupEnd; j >= groupStart && j >= 1; j--) {
+                    if (j < static_cast<int>(pend.size()) && !inserted[j]) {
+                        insertWithBinarySearch(result, pend[j], result.size());
+                        inserted[j] = true;
+                    }
+                }
+            }
+            
+            for (size_t i = 1; i < pend.size(); i++) {
+                if (!inserted[i]) {
+                    insertWithBinarySearch(result, pend[i], result.size());
+                }
             }
         }
     }
