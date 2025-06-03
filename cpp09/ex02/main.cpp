@@ -6,7 +6,7 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:40:12 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/06/02 21:55:52 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/06/03 19:54:03 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <climits>
 #include <stdexcept>
+#include <chrono>
 
 bool isValidNumber(const std::string& str) {
     if (str.empty()) return false;
@@ -33,12 +34,7 @@ bool isInputValid(int argc, char* argv[]) {
         std::cerr << "Error: no arguments provided" << std::endl;
         return false;
     }
-    
-    if (argc > 3001) {
-        std::cerr << "Error: too many arguments" << std::endl;
-        return false;
-    }
-    
+
     for (int i = 1; i < argc; i++) {
         std::string arg(argv[i]);
         if (!isValidNumber(arg)) {
@@ -107,10 +103,16 @@ int main(int argc, char* argv[]) {
         std::cout << "Before: ";
         sorter.printVector(numbers);
         
+        auto start = std::chrono::high_resolution_clock::now();
         std::vector<int> sorted = sorter.fordJohnsonSort(numbers);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         
         std::cout << "After: ";
         sorter.printVector(sorted);
+        
+        std::cout << "Time to process a range of " << numbers.size() 
+                  << " elements with std::vector : " << duration.count() << " us" << std::endl;
         
         if (!isSorted(sorted)) {
             std::cerr << "Error: sorting failed" << std::endl;
