@@ -6,25 +6,12 @@
 /*   By: pmarkaid <pmarkaid@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:35:24 by pmarkaid          #+#    #+#             */
-/*   Updated: 2025/06/02 22:02:47 by pmarkaid         ###   ########.fr       */
+/*   Updated: 2025/06/03 20:12:43 by pmarkaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include <algorithm>
-
-PmergeMe::PmergeMe() {}
-
-PmergeMe::~PmergeMe() {}
-
-PmergeMe::PmergeMe(const PmergeMe& other) {
-    (void)other;
-}
-
-PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
-    (void)other;
-    return *this;
-}
 
 std::vector<int> PmergeMe::generateJacobsthal(size_t n) {
     if (n == 0) return std::vector<int>();
@@ -42,7 +29,8 @@ std::vector<int> PmergeMe::generateJacobsthal(size_t n) {
     return jacobsthal;
 }
 
-void PmergeMe::insertWithBinarySearch(std::vector<int>& arr, int value, size_t limit) {
+template<typename Container>
+void PmergeMe::insertWithBinarySearch(Container& arr, int value, size_t limit) {
     size_t left = 0;
     size_t right = std::min(limit, arr.size());
     
@@ -58,7 +46,8 @@ void PmergeMe::insertWithBinarySearch(std::vector<int>& arr, int value, size_t l
     arr.insert(arr.begin() + left, value);
 }
 
-std::vector<int> PmergeMe::fordJohnsonSort(std::vector<int> arr) {
+template<typename Container>
+Container PmergeMe::fordJohnsonSort(Container arr) {
     if (arr.size() <= 1) {
         return arr;
     }
@@ -82,7 +71,7 @@ std::vector<int> PmergeMe::fordJohnsonSort(std::vector<int> arr) {
         }
     }
     
-    std::vector<int> main;
+    Container main;
     for (size_t i = 0; i < pairs.size(); i++) {
         main.push_back(pairs[i].first);
     }
@@ -99,7 +88,7 @@ std::vector<int> PmergeMe::fordJohnsonSort(std::vector<int> arr) {
         }
     }
     
-    std::vector<int> result = main;
+    Container result = main;
     
     if (!pend.empty()) {
         insertWithBinarySearch(result, pend[0], result.size());
@@ -136,10 +125,18 @@ std::vector<int> PmergeMe::fordJohnsonSort(std::vector<int> arr) {
     return result;
 }
 
-void PmergeMe::printVector(const std::vector<int>& arr) {
+template<typename Container>
+void PmergeMe::printContainer(const Container& arr) {
     for (size_t i = 0; i < arr.size(); i++) {
         std::cout << arr[i];
         if (i < arr.size() - 1) std::cout << " ";
     }
     std::cout << std::endl;
 }
+
+template std::vector<int> PmergeMe::fordJohnsonSort<std::vector<int>>(std::vector<int> arr);
+template std::deque<int> PmergeMe::fordJohnsonSort<std::deque<int>>(std::deque<int> arr);
+template void PmergeMe::printContainer<std::vector<int>>(const std::vector<int>& arr);
+template void PmergeMe::printContainer<std::deque<int>>(const std::deque<int>& arr);
+template void PmergeMe::insertWithBinarySearch<std::vector<int>>(std::vector<int>& arr, int value, size_t limit);
+template void PmergeMe::insertWithBinarySearch<std::deque<int>>(std::deque<int>& arr, int value, size_t limit);
